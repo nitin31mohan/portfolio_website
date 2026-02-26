@@ -5,6 +5,7 @@ import Layout from '@/layouts/Layout.astro';
 import HighlightsStack from '@/components/HighlightsStack.astro';
 import ContactForm from '@/components/ContactForm.astro';
 import campaignsData from '@/data/campaigns.json';
+import { Redis } from '@upstash/redis';
 
 const { campaign } = Astro.params;
 
@@ -17,15 +18,16 @@ if (!campaignEntry) {
   return new Response(null, { status: 404, statusText: 'Not found' });
 }
 
-// Log the visit (fire-and-forget)
+// Log the visit directly via Redis (avoids unreliable self-referential fetch on Vercel)
 try {
-  const origin = Astro.url.origin;
-  fetch(`${origin}/api/log-visit`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ slug: campaign }),
-  }).catch(() => {});
-} catch (_) {}
+  const redis = new Redis({
+    url: import.meta.env.UPSTASH_REDIS_REST_URL,
+    token: import.meta.env.UPSTASH_REDIS_REST_TOKEN,
+  });
+  await redis.incr(`visit:${campaign}`);
+} catch (err) {
+  console.error('Failed to log campaign visit:', err);
+}
 ---
 
 <Layout
@@ -58,16 +60,16 @@ try {
       aria-hidden="true"
     ></div>
     <div
-      class="absolute inset-0 opacity-[0.025]"
-      style="background-image: linear-gradient(rgba(212,148,60,1) 1px, transparent 1px), linear-gradient(90deg, rgba(212,148,60,1) 1px, transparent 1px); background-size: 60px 60px;"
+      class="absolute inset-0"
+      style="opacity: 0.025; background-image: linear-gradient(rgba(212,148,60,1) 1px, transparent 1px), linear-gradient(90deg, rgba(212,148,60,1) 1px, transparent 1px); background-size: 60px 60px;"
       aria-hidden="true"
     ></div>
 
     <!-- Code editor ghost overlay -->
     <div
-      class="code-ghost absolute inset-0 flex items-center justify-end overflow-hidden pointer-events-none opacity-[0.15]"
+      class="code-ghost absolute inset-0 flex items-start justify-end overflow-hidden pointer-events-none opacity-[0.15]"
       aria-hidden="true"
-      style="padding-right: 5vw; padding-top: 8vh;"
+      style="padding-right: 5vw; padding-top: 5vh;"
     >
       <pre class="font-mono text-[0.55rem] sm:text-xs md:text-sm leading-relaxed text-ivory whitespace-pre select-none" style="max-width: 680px; tab-size: 4;"><span style="color:#D4943C;">import</span> torch
 <span style="color:#D4943C;">from</span> transformers <span style="color:#D4943C;">import</span> AutoModel, AutoTokenizer
