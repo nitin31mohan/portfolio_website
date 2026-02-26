@@ -8,12 +8,12 @@
 
   <!-- Card 1 — Semantic Search Systems -->
   <div
-    class="h-card relative flex items-center justify-center min-h-screen px-6"
+    class="h-card relative flex items-start lg:items-center pt-24 lg:pt-0 min-h-screen px-6"
     style="width: 100vw; flex-shrink: 0; background: linear-gradient(135deg, #0D0D12 0%, #12121a 100%);"
   >
     <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 20% 50%, rgba(212,148,60,0.05) 0%, transparent 60%);" aria-hidden="true"></div>
 
-    <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
       <div class="space-y-6">
         <div class="font-mono text-sm text-champagne/60 tracking-widest uppercase">01 / 03</div>
         <h2 class="font-sans font-semibold text-5xl md:text-6xl text-ivory leading-none" style="letter-spacing: -0.03em;">
@@ -35,7 +35,7 @@
       </div>
 
       <!-- Neural Constellation — radially masked, no hard boundary -->
-      <div class="flex items-center justify-center" style="height: 420px; width: 420px; position: relative;">
+      <div class="canvas-wrap flex items-center justify-center" style="height: 420px; width: 420px; position: relative;">
         <canvas
           id="constellation-canvas"
           width="500"
@@ -48,14 +48,14 @@
 
   <!-- Card 2 — Agentic Feedback System -->
   <div
-    class="h-card relative flex items-center justify-center min-h-screen px-6"
+    class="h-card relative flex items-start lg:items-center pt-24 lg:pt-0 min-h-screen px-6"
     style="width: 100vw; flex-shrink: 0; background: linear-gradient(135deg, #0e0e16 0%, #0D0D12 100%);"
   >
     <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 75% 40%, rgba(212,148,60,0.04) 0%, transparent 60%);" aria-hidden="true"></div>
 
-    <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
       <!-- Pipeline flow animation -->
-      <div class="flex items-center justify-center order-2 lg:order-1" style="height: 420px; width: 420px; position: relative;">
+      <div class="canvas-wrap flex items-center justify-center order-2 lg:order-1" style="height: 420px; width: 420px; position: relative;">
         <canvas
           id="pipeline-canvas"
           width="500"
@@ -88,12 +88,12 @@
 
   <!-- Card 3 — Search Relevance & Ranking -->
   <div
-    class="h-card relative flex items-center justify-center min-h-screen px-6"
+    class="h-card relative flex items-start lg:items-center pt-24 lg:pt-0 min-h-screen px-6"
     style="width: 100vw; flex-shrink: 0; background: linear-gradient(135deg, #0D0D12 0%, #0f0f1a 100%);"
   >
     <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 80%, rgba(212,148,60,0.04) 0%, transparent 60%);" aria-hidden="true"></div>
 
-    <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
       <div class="space-y-6">
         <div class="font-mono text-sm text-champagne/60 tracking-widest uppercase">03 / 03</div>
         <h2 class="font-sans font-semibold text-5xl md:text-6xl text-ivory leading-none" style="letter-spacing: -0.03em;">
@@ -115,7 +115,7 @@
       </div>
 
       <!-- EKG — horizontally masked, fades at both ends -->
-      <div class="flex flex-col items-center justify-center" style="height: 420px;">
+      <div class="canvas-wrap ekg-wrap flex flex-col items-center justify-center" style="height: 420px;">
         <div style="width:100%;max-width:520px;-webkit-mask-image:linear-gradient(90deg,transparent 0%,black 15%,black 85%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0%,black 15%,black 85%,transparent 100%);overflow:visible;">
           <svg id="ekg-svg" viewBox="0 0 500 120" width="100%" height="120" style="overflow:visible;">
             <path id="ekg-path" d="M0,60 L40,60 L55,60 L65,15 L75,105 L85,60 L100,60 L130,60 L145,60 L155,20 L165,100 L175,60 L190,60 L220,60 L235,60 L245,18 L255,102 L265,60 L280,60 L310,60 L325,60 L335,16 L345,104 L355,60 L370,60 L400,60 L415,60 L425,14 L435,106 L445,60 L460,60 L500,60" fill="none" stroke="#D4943C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" />
@@ -588,3 +588,18 @@
     });
   }
 </script>
+
+<style>
+  /* Mobile: cap canvas/animation heights so text + animation both fit in one viewport */
+  @media (max-width: 1023px) {
+    .canvas-wrap {
+      height: min(240px, 32vh) !important;
+      width: min(380px, calc(100vw - 3rem)) !important;
+      max-width: 100%;
+    }
+    /* EKG card: slightly taller to keep stats legible */
+    .ekg-wrap {
+      height: min(260px, 34vh) !important;
+    }
+  }
+</style>
