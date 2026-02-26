@@ -1,0 +1,141 @@
+---
+export const prerender = false;
+
+import Layout from '@/layouts/Layout.astro';
+import HighlightsStack from '@/components/HighlightsStack.astro';
+import ContactForm from '@/components/ContactForm.astro';
+import campaignsData from '@/data/campaigns.json';
+
+const { campaign } = Astro.params;
+
+// Find this campaign
+const campaignEntry = (campaignsData as { slug: string; company: string; role: string; applied: string }[])
+  .find((c) => c.slug === campaign);
+
+// If not a known campaign slug, 404
+if (!campaignEntry) {
+  return new Response(null, { status: 404, statusText: 'Not found' });
+}
+
+// Log the visit (fire-and-forget)
+try {
+  const origin = Astro.url.origin;
+  fetch(`${origin}/api/log-visit`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ slug: campaign }),
+  }).catch(() => {});
+} catch (_) {}
+---
+
+<Layout
+  title={`Nitin Mohan — ${campaignEntry.role} at ${campaignEntry.company}`}
+  description={`Nitin Mohan's profile for the ${campaignEntry.role} role at ${campaignEntry.company}. Senior Data Scientist specialising in NLP and semantic search.`}
+>
+  <!-- Campaign context banner -->
+  <div
+    class="fixed bottom-4 left-4 z-40 flex items-center gap-3 px-5 py-3 rounded-full font-mono text-xs"
+    style="background: rgba(13,13,18,0.95); border: 1px solid rgba(212,148,60,0.25); backdrop-filter: blur(16px); color: rgba(212,148,60,0.8);"
+  >
+    <span class="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse-slow"></span>
+    {campaignEntry.company} · {campaignEntry.role}
+  </div>
+
+  <!-- Reuse home page content -->
+  <section
+    id="hero"
+    class="relative flex flex-col justify-end min-h-[100dvh] overflow-hidden"
+    style="padding-bottom: 8vh;"
+  >
+    <div
+      class="absolute inset-0"
+      style="
+        background:
+          radial-gradient(ellipse at 15% 85%, rgba(212, 148, 60, 0.07) 0%, transparent 55%),
+          radial-gradient(ellipse at 85% 15%, rgba(42, 42, 53, 0.8) 0%, transparent 50%),
+          linear-gradient(160deg, #0f0f18 0%, #0D0D12 50%, #08080d 100%);
+      "
+      aria-hidden="true"
+    ></div>
+    <div
+      class="absolute inset-0 opacity-[0.025]"
+      style="background-image: linear-gradient(rgba(212,148,60,1) 1px, transparent 1px), linear-gradient(90deg, rgba(212,148,60,1) 1px, transparent 1px); background-size: 60px 60px;"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Code editor ghost overlay -->
+    <div
+      class="code-ghost absolute inset-0 flex items-center justify-end overflow-hidden pointer-events-none opacity-[0.15]"
+      aria-hidden="true"
+      style="padding-right: 5vw; padding-top: 8vh;"
+    >
+      <pre class="font-mono text-[0.55rem] sm:text-xs md:text-sm leading-relaxed text-ivory whitespace-pre select-none" style="max-width: 680px; tab-size: 4;"><span style="color:#D4943C;">import</span> torch
+<span style="color:#D4943C;">from</span> transformers <span style="color:#D4943C;">import</span> AutoModel, AutoTokenizer
+<span style="color:#D4943C;">from</span> sentence_transformers <span style="color:#D4943C;">import</span> SentenceTransformer
+
+<span style="color:#6A9955;"># Load multilingual embedding model</span>
+model = SentenceTransformer(<span style="color:#CE9178;">"paraphrase-multilingual-MiniLM-L12-v2"</span>)
+
+<span style="color:#D4943C;">def</span> <span style="color:#DCDCAA;">encode_corpus</span>(texts: list[str], batch_size: int = <span style="color:#B5CEA8;">256</span>):
+    <span style="color:#CE9178;">"""Encode documents into dense vector embeddings."""</span>
+    embeddings = model.encode(
+        texts,
+        batch_size=batch_size,
+        normalize_embeddings=<span style="color:#569CD6;">True</span>,
+        show_progress_bar=<span style="color:#569CD6;">True</span>,
+    )
+    <span style="color:#D4943C;">return</span> torch.tensor(embeddings)</pre>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto w-full px-6 lg:px-12">
+      <div class="max-w-3xl">
+        <div
+          class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full font-mono text-xs tracking-widest uppercase"
+          style="background: rgba(212,148,60,0.08); border: 1px solid rgba(212,148,60,0.2); color: #D4943C;"
+        >
+          <span class="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse-slow"></span>
+          {campaignEntry.role} — {campaignEntry.company}
+        </div>
+
+        <div class="mb-2">
+          <h1
+            class="font-sans"
+            style="font-size: clamp(3.5rem, 12vw, 10rem); color: #D4943C; letter-spacing: -0.04em; font-weight: 200; line-height: 1.15;"
+          >
+            Nitin Mohan
+          </h1>
+        </div>
+        <div class="mb-10">
+          <div class="font-mono text-sm md:text-base tracking-[0.3em] uppercase text-ivory/40">
+            Data Artisan
+          </div>
+        </div>
+
+        <p class="text-ivory/50 text-base md:text-lg leading-relaxed mb-10">
+          <span class="whitespace-nowrap">Senior Data Scientist</span>
+          <span class="hidden sm:inline"> · </span><br class="sm:hidden" />
+          <span class="whitespace-nowrap">NLP &amp; Semantic Search</span>
+          <span class="hidden sm:inline"> · </span><br class="sm:hidden" />
+          <span class="whitespace-nowrap">The Stepstone Group</span>
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="/#work" class="btn-primary"><span>Explore My Work</span></a>
+          <a href="/ask" class="btn-ghost"><span>Ask Me Anything</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <HighlightsStack />
+  <ContactForm />
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+
+  gsap.fromTo(
+    '#hero h1, #hero div',
+    { y: 40, opacity: 0 },
+    { y: 0, opacity: 1, stagger: 0.08, duration: 0.8, ease: 'power3.out', delay: 0.2 }
+  );
+</script>

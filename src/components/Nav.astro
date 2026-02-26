@@ -1,0 +1,149 @@
+---
+// The Floating Island — pill-shaped navbar, morphs on scroll
+---
+
+<nav id="navbar" class="fixed top-6 left-1/2 z-40 -translate-x-1/2 w-[85vw]" aria-label="Main navigation">
+  <div
+    id="nav-pill"
+    class="relative flex items-center w-full px-5 py-2 rounded-full transition-all duration-500"
+    style="background: transparent; border: 1px solid transparent;"
+  >
+    <!-- Logo — left-anchored -->
+    <a
+      href="/"
+      class="font-sans font-bold text-ivory text-sm tracking-tight whitespace-nowrap hover:text-champagne"
+      style="letter-spacing: -0.02em;"
+    >
+      NM
+    </a>
+
+    <!-- Nav links — absolutely centered within the pill -->
+    <div class="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+      <a href="/#about" class="nav-link px-3 py-1.5 rounded-full text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5 transition-all">
+        About
+      </a>
+      <a href="/#work" class="nav-link px-3 py-1.5 rounded-full text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5 transition-all">
+        Work
+      </a>
+      <a href="/ask" class="nav-link nav-ask relative px-3 py-1.5 rounded-full text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5 transition-all">
+        Ask
+        <span class="ask-underline"></span>
+      </a>
+      <a href="/blog" class="nav-link px-3 py-1.5 rounded-full text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5 transition-all">
+        Blog
+      </a>
+    </div>
+
+    <!-- CTA — right-anchored -->
+    <a href="/#contact" class="ml-auto btn-primary text-xs py-1.5 px-4">
+      <span>Let's Talk</span>
+    </a>
+
+    <!-- Mobile menu toggle -->
+    <button
+      id="mobile-menu-toggle"
+      class="md:hidden ml-2 p-2 rounded-full hover:bg-white/5 text-ivory/70 hover:text-ivory"
+      aria-label="Toggle mobile menu"
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+        <line x1="3" y1="18" x2="21" y2="18" />
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile dropdown -->
+<div
+  id="mobile-menu"
+  class="fixed top-20 left-1/2 -translate-x-1/2 z-40 hidden w-[85vw] max-w-sm rounded-3xl overflow-hidden"
+  style="background: rgba(13, 13, 18, 0.95); backdrop-filter: blur(24px); border: 1px solid rgba(250, 248, 245, 0.1);"
+>
+  <div class="flex flex-col p-4 gap-1">
+    <a href="/#about" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">About</a>
+    <a href="/#work" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Work</a>
+    <a href="/ask" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Ask</a>
+    <a href="/blog" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Blog</a>
+    <div class="mt-2 pt-2" style="border-top: 1px solid rgba(250,248,245,0.1);">
+      <a href="/#contact" class="btn-primary w-full justify-center text-xs py-2">
+        <span>Let's Talk</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  const navPill = document.getElementById('nav-pill');
+  const mobileToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  // Morph on scroll (theme-aware)
+  function isDark() { return document.documentElement.classList.contains('dark'); }
+
+  let scrolledPast = false;
+  function applyNavStyle() {
+    if (!scrolledPast) {
+      navPill!.style.background = 'transparent';
+      navPill!.style.borderColor = 'transparent';
+      navPill!.style.backdropFilter = 'none';
+      navPill!.style.boxShadow = 'none';
+    } else {
+      const dark = isDark();
+      navPill!.style.background = dark ? 'rgba(13,13,18,0.75)' : 'rgba(250,250,248,0.85)';
+      navPill!.style.borderColor = dark ? 'rgba(250,248,245,0.08)' : 'rgba(13,13,18,0.08)';
+      navPill!.style.backdropFilter = 'blur(20px)';
+      navPill!.style.boxShadow = dark ? '0 8px 32px rgba(0,0,0,0.4)' : '0 8px 32px rgba(0,0,0,0.06)';
+    }
+  }
+
+  // Listen for theme changes to refresh nav style
+  const themeObs = new MutationObserver(() => applyNavStyle());
+  themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+  const heroObserver = new IntersectionObserver(
+    (entries) => {
+      scrolledPast = !entries[0].isIntersecting;
+      applyNavStyle();
+    },
+    { threshold: 0.1 }
+  );
+
+  const heroSentinel = document.createElement('div');
+  heroSentinel.style.cssText = 'position:absolute;top:80vh;left:0;width:1px;height:1px;pointer-events:none;';
+  document.body.prepend(heroSentinel);
+  heroObserver.observe(heroSentinel);
+
+  // Mobile menu
+  mobileToggle?.addEventListener('click', () => {
+    const isHidden = mobileMenu!.classList.contains('hidden');
+    mobileMenu!.classList.toggle('hidden', !isHidden);
+  });
+
+  // Close on link click
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+  });
+</script>
+
+<style>
+  .nav-ask {
+    position: relative;
+  }
+  .ask-underline {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    border-radius: 1px;
+    background: #22c55e;
+    box-shadow: 0 0 6px rgba(34,197,94,0.5);
+    animation: ask-pulse 2s ease-in-out infinite;
+  }
+  @keyframes ask-pulse {
+    0%, 100% { width: 14px; opacity: 0.75; }
+    50% { width: 28px; opacity: 1; }
+  }
+</style>

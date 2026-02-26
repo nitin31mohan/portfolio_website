@@ -1,0 +1,105 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer
+  class="relative mt-0 rounded-t-[4rem] overflow-hidden"
+  style="background: #08080d;"
+>
+  <!-- Subtle top glow -->
+  <div
+    class="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-px"
+    style="background: linear-gradient(90deg, transparent, rgba(212, 148, 60, 0.4), transparent);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="max-w-7xl mx-auto px-6 pt-16 pb-10">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+
+      <!-- Brand -->
+      <div class="space-y-4">
+        <div class="font-sans font-semibold text-2xl text-ivory tracking-tight" style="letter-spacing: -0.04em;">
+          Nitin Mohan
+        </div>
+        <p class="text-ivory/40 text-sm font-mono leading-relaxed">
+          Senior Data Scientist.<br />
+          NLP · Semantic Search · ML Systems
+        </p>
+        <!-- Status indicator -->
+        <div class="flex items-center gap-2 pt-2">
+          <span class="relative flex h-2 w-2">
+            <span
+              class="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75"
+              style="background: #22c55e;"
+            ></span>
+            <span class="relative inline-flex rounded-full h-2 w-2" style="background: #22c55e;"></span>
+          </span>
+          <span class="font-mono text-xs" style="color: #22c55e;">
+            System Operational
+          </span>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="space-y-4">
+        <div class="font-mono text-xs text-ivory/30 uppercase tracking-widest">Navigate</div>
+        <nav class="flex flex-col gap-2">
+          <a href="/" class="text-ivory/50 hover:text-champagne text-sm transition-all hover:translate-x-1">Home</a>
+          <a href="/#about" class="text-ivory/50 hover:text-champagne text-sm transition-all hover:translate-x-1">About</a>
+          <a href="/#work" class="text-ivory/50 hover:text-champagne text-sm transition-all hover:translate-x-1">Work</a>
+          <a href="/ask" class="text-ivory/50 hover:text-champagne text-sm transition-all hover:translate-x-1">Ask Me</a>
+          <a href="/blog" class="text-ivory/50 hover:text-champagne text-sm transition-all hover:translate-x-1">Blog</a>
+          <a href="/#contact" class="text-ivory/50 hover:text-champagne text-sm transition-all hover:translate-x-1">Contact</a>
+        </nav>
+      </div>
+
+      <!-- Connect -->
+      <div class="space-y-4">
+        <div class="font-mono text-xs text-ivory/30 uppercase tracking-widest">Connect</div>
+        <div class="flex flex-col gap-3">
+          <a
+            href="mailto:mohannitin321@gmail.com"
+            class="flex items-center gap-2 text-ivory/50 hover:text-champagne text-sm transition-all hover:-translate-y-px"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+            </svg>
+            mohannitin321@gmail.com
+          </a>
+          <a
+            href="https://www.linkedin.com/in/nitinmohan31/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-2 text-ivory/50 hover:text-champagne text-sm transition-all hover:-translate-y-px"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+              <rect x="2" y="9" width="4" height="12"></rect>
+              <circle cx="4" cy="4" r="2"></circle>
+            </svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div
+      class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-8"
+      style="border-top: 1px solid rgba(250, 248, 245, 0.06);"
+    >
+      <p class="font-mono text-xs text-ivory/20">
+        © {year} Nitin Mohan. All rights reserved.
+      </p>
+      <div class="flex items-center gap-4">
+        <span class="font-mono text-xs text-ivory/20">Built with Astro + Tailwind</span>
+        <div
+          class="h-3 w-px"
+          style="background: rgba(250,248,245,0.1);"
+        ></div>
+        <span class="font-mono text-xs" style="color: #d4943c;">v1.0</span>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,336 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import HighlightsStack from '@/components/HighlightsStack.astro';
+import ContactForm from '@/components/ContactForm.astro';
+---
+
+<Layout
+  title="Nitin Mohan — Data Scientist"
+  description="Senior Data Scientist specialising in NLP, semantic search, and large-scale ML systems. Building precision intelligence at The Stepstone Group."
+>
+  <!-- ── HERO ──────────────────────────────────────────────────────── -->
+  <section
+    id="hero"
+    class="relative flex flex-col justify-end min-h-[100dvh] overflow-hidden"
+    style="padding-bottom: 8vh;"
+  >
+    <!-- Background -->
+    <div
+      class="absolute inset-0"
+      style="
+        background:
+          radial-gradient(ellipse at 15% 85%, rgba(212, 148, 60, 0.07) 0%, transparent 55%),
+          radial-gradient(ellipse at 85% 15%, rgba(42, 42, 53, 0.8) 0%, transparent 50%),
+          radial-gradient(ellipse at 50% 50%, rgba(13, 13, 18, 0.4) 0%, transparent 80%),
+          linear-gradient(160deg, #0f0f18 0%, #0D0D12 50%, #08080d 100%);
+      "
+      aria-hidden="true"
+    ></div>
+
+    <!-- Fine grid texture -->
+    <div
+      class="absolute inset-0 opacity-[0.025]"
+      style="background-image: linear-gradient(rgba(212,148,60,1) 1px, transparent 1px), linear-gradient(90deg, rgba(212,148,60,1) 1px, transparent 1px); background-size: 60px 60px;"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Code editor ghost overlay -->
+    <div
+      class="code-ghost absolute inset-0 flex items-center justify-end overflow-hidden pointer-events-none opacity-[0.15]"
+      aria-hidden="true"
+      style="padding-right: 5vw; padding-top: 8vh;"
+    >
+      <pre class="font-mono text-[0.55rem] sm:text-xs md:text-sm leading-relaxed text-ivory whitespace-pre select-none" style="max-width: 680px; tab-size: 4;"><span style="color:#D4943C;">import</span> torch
+<span style="color:#D4943C;">from</span> transformers <span style="color:#D4943C;">import</span> AutoModel, AutoTokenizer
+<span style="color:#D4943C;">from</span> sentence_transformers <span style="color:#D4943C;">import</span> SentenceTransformer
+
+<span style="color:#6A9955;"># Load multilingual embedding model</span>
+model = SentenceTransformer(<span style="color:#CE9178;">"paraphrase-multilingual-MiniLM-L12-v2"</span>)
+
+<span style="color:#D4943C;">def</span> <span style="color:#DCDCAA;">encode_corpus</span>(texts: list[str], batch_size: int = <span style="color:#B5CEA8;">256</span>):
+    <span style="color:#CE9178;">"""Encode documents into dense vector embeddings."""</span>
+    embeddings = model.encode(
+        texts,
+        batch_size=batch_size,
+        normalize_embeddings=<span style="color:#569CD6;">True</span>,
+        show_progress_bar=<span style="color:#569CD6;">True</span>,
+    )
+    <span style="color:#D4943C;">return</span> torch.tensor(embeddings)
+
+<span style="color:#6A9955;"># Semantic similarity search</span>
+<span style="color:#D4943C;">def</span> <span style="color:#DCDCAA;">retrieve</span>(query: str, corpus_emb, top_k: int = <span style="color:#B5CEA8;">10</span>):
+    q_emb = model.encode(query, normalize_embeddings=<span style="color:#569CD6;">True</span>)
+    scores = torch.nn.functional.cosine_similarity(
+        torch.tensor(q_emb).unsqueeze(<span style="color:#B5CEA8;">0</span>), corpus_emb
+    )
+    <span style="color:#D4943C;">return</span> torch.topk(scores, k=top_k)
+
+<span style="color:#6A9955;"># Fine-tune with LoRA adapters</span>
+<span style="color:#D4943C;">from</span> peft <span style="color:#D4943C;">import</span> LoraConfig, get_peft_model
+config = LoraConfig(r=<span style="color:#B5CEA8;">16</span>, lora_alpha=<span style="color:#B5CEA8;">32</span>, target_modules=[<span style="color:#CE9178;">"q"</span>, <span style="color:#CE9178;">"v"</span>])</pre>
+    </div>
+
+    <!-- Animated glow orb -->
+    <div
+      id="hero-orb"
+      class="absolute pointer-events-none"
+      style="width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(212,148,60,0.06) 0%, transparent 70%); top: 20%; left: -10%; filter: blur(40px);"
+      aria-hidden="true"
+    ></div>
+
+    <!-- Content — bottom left -->
+    <div class="relative z-10 max-w-7xl mx-auto w-full px-6 lg:px-12">
+      <div class="max-w-3xl">
+        <!-- Tag line -->
+        <div
+          id="hero-tag"
+          class="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full font-mono text-xs tracking-widest uppercase"
+          style="background: rgba(212,148,60,0.08); border: 1px solid rgba(212,148,60,0.2); color: #D4943C; opacity: 0;"
+        >
+          <span class="w-1.5 h-1.5 rounded-full bg-champagne animate-pulse-slow"></span>
+          Available for Senior IC Roles
+        </div>
+
+        <!-- Main headline -->
+        <div class="mb-2">
+          <h1
+            id="hero-line1"
+            class="font-sans"
+            style="
+              font-size: clamp(3.5rem, 12vw, 10rem);
+              color: #D4943C;
+              letter-spacing: -0.04em;
+              font-weight: 200;
+              line-height: 1.15;
+              opacity: 0;
+              transform: translateY(60px);
+            "
+          >
+            Nitin Mohan
+          </h1>
+        </div>
+        <div class="mb-10">
+          <div
+            id="hero-line2"
+            class="font-mono text-sm md:text-base tracking-[0.3em] uppercase text-ivory/40"
+            style="opacity: 0; transform: translateY(40px);"
+          >
+            Data Artisan
+          </div>
+        </div>
+
+        <!-- Sub description -->
+        <div
+          id="hero-sub"
+          class="flex flex-col sm:flex-row sm:items-center gap-4 mb-10"
+          style="opacity: 0; transform: translateY(30px);"
+        >
+          <p class="text-ivory/50 text-base md:text-lg leading-relaxed">
+            <span class="whitespace-nowrap">Senior Data Scientist</span>
+            <span class="hidden sm:inline"> · </span><br class="sm:hidden" />
+            <span class="whitespace-nowrap">NLP &amp; Semantic Search</span>
+            <span class="hidden sm:inline"> · </span><br class="sm:hidden" />
+            <span class="whitespace-nowrap">The Stepstone Group</span>
+          </p>
+          <div class="hidden sm:block h-8 w-px" style="background: rgba(250,248,245,0.1);"></div>
+          <div class="font-mono text-xs text-ivory/30">
+            <div>City of London, UK</div>
+            <div>MSc AI · Southampton</div>
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <div
+          id="hero-cta"
+          class="flex flex-wrap gap-4"
+          style="opacity: 0; transform: translateY(30px);"
+        >
+          <a href="/#work" class="btn-primary">
+            <span>Explore My Work</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+          </a>
+          <a href="/ask" class="btn-ghost">
+            <span>Ask Me Anything</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── ABOUT ────────────────────────────────────────────────────── -->
+  <section
+    id="about"
+    class="py-32 px-6 relative overflow-hidden"
+    style="background: linear-gradient(180deg, #0D0D12 0%, #0e0e16 100%);"
+  >
+    <!-- Section accent -->
+    <div
+      class="absolute right-0 top-1/2 -translate-y-1/2 w-96 h-96 pointer-events-none"
+      style="background: radial-gradient(circle, rgba(212,148,60,0.04) 0%, transparent 70%);"
+      aria-hidden="true"
+    ></div>
+
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <!-- Left: Bio -->
+        <div class="space-y-8 about-text">
+          <div class="font-mono text-sm text-champagne/80 tracking-widest uppercase">About</div>
+          <h2
+            class="font-sans font-semibold text-4xl md:text-5xl text-ivory leading-tight"
+            style="letter-spacing: -0.03em;"
+          >
+            I build ML systems<br />
+            that understand<br />
+            <span style="font-weight: 200; color: #D4943C;">language at scale.</span>
+          </h2>
+          <div class="space-y-4 text-ivory/60 text-base leading-relaxed max-w-lg">
+            <p>
+              Currently at <span class="text-ivory/80">The Stepstone Group</span>, where I lead semantic
+              search and personalization for EU job platforms — serving millions of queries daily
+              with sub-100ms inference.
+            </p>
+            <p>
+              I specialize in the hard part: fine-tuning multilingual transformer models for
+              production, designing evaluation frameworks that catch real regressions, and
+              applying causal inference to ship with confidence.
+            </p>
+            <p>
+              Previously a Research Fellow at <span class="text-ivory/80">IDIAP Research Institute</span>
+              (EU-funded AI4Media), and a Data Scientist at <span class="text-ivory/80">EY</span>.
+              MS in Artificial Intelligence from the University of Southampton.
+            </p>
+          </div>
+          <div class="flex gap-4 flex-wrap">
+            <a href="/#contact" class="btn-primary">
+              <span>Get in Touch</span>
+            </a>
+            <a href="/ask" class="btn-ghost">
+              <span>Ask about my work</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Stats & Skills -->
+        <div class="space-y-6 about-stats">
+          <!-- Skills -->
+          <div
+            class="p-6 rounded-3xl space-y-4"
+            style="background: rgba(250,248,245,0.03); border: 1px solid rgba(250,248,245,0.06);"
+          >
+            <div class="font-mono text-xs text-ivory/30 tracking-widest uppercase">Core Stack</div>
+            <div class="flex flex-wrap gap-2">
+              {['PyTorch', 'Transformers', 'SentenceTransformers', 'LoRA/QLoRA', 'AWS SageMaker', 'AWS ECS', 'Vector Stores', 'Semantic Retrieval', 'Python', 'SQL', 'Causal Inference'].map((skill) => (
+                <span
+                  class="font-mono text-xs px-3 py-1.5 rounded-full"
+                  style="background: rgba(212,148,60,0.07); border: 1px solid rgba(212,148,60,0.18); color: rgba(212,148,60,0.85);"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <!-- Experience timeline (compact) -->
+          <div
+            class="p-6 rounded-3xl space-y-4"
+            style="background: rgba(250,248,245,0.03); border: 1px solid rgba(250,248,245,0.06);"
+          >
+            <div class="font-mono text-xs text-ivory/30 tracking-widest uppercase">Timeline</div>
+            {[
+              { co: 'The Stepstone Group', role: 'Product Data Scientist', period: 'Jun 2023 – Present', active: true },
+              { co: 'IDIAP Research Institute', role: 'Research Fellow', period: 'Jun – Dec 2022', active: false },
+              { co: 'EY', role: 'Data Scientist', period: 'Mar 2019 – Sep 2021', active: false },
+              { co: 'TO THE NEW', role: 'Software Developer', period: 'Sep 2018 – Mar 2019', active: false },
+            ].map((exp) => (
+              <div class="flex items-start gap-3">
+                <div
+                  class="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0"
+                  style={`background: ${exp.active ? '#D4943C' : 'rgba(250,248,245,0.2)'};`}
+                ></div>
+                <div>
+                  <div class="text-sm text-ivory/80 font-medium">{exp.co}</div>
+                  <div class="font-mono text-xs text-ivory/30">{exp.role} · {exp.period}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── HIGHLIGHTS STACK ─────────────────────────────────────────── -->
+  <HighlightsStack />
+
+  <!-- ── CONTACT ──────────────────────────────────────────────────── -->
+  <ContactForm />
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const ctx = gsap.context(() => {
+    // Hero entrance sequence
+    const tl = gsap.timeline({ delay: 0.2 });
+
+    tl.to('#hero-tag', { opacity: 1, duration: 0.6, ease: 'power3.out' })
+      .to('#hero-line1', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' }, '-=0.3')
+      .to('#hero-line2', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.5')
+      .to('#hero-sub', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.4')
+      .to('#hero-cta', { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.3');
+
+    // Hero orb parallax
+    gsap.to('#hero-orb', {
+      y: -120,
+      scrollTrigger: {
+        trigger: '#hero',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1.5,
+      },
+    });
+
+    // About section entrance
+    gsap.fromTo(
+      '.about-text > *',
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        stagger: 0.1,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#about',
+          start: 'top 70%',
+          once: true,
+        },
+      }
+    );
+
+    gsap.fromTo(
+      '.about-stats > *',
+      { y: 40, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        stagger: 0.12,
+        duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '#about',
+          start: 'top 65%',
+          once: true,
+        },
+      }
+    );
+  });
+
+  document.addEventListener('astro:before-swap', () => ctx.revert());
+</script>
+

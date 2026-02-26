@@ -1,0 +1,590 @@
+---
+// "Horizontal Scroll Archive" — 3 full-screen expertise cards, scroll horizontally on vertical scroll
+---
+
+<section id="work" class="highlights-section relative">
+  <div class="h-scroll-wrap relative overflow-hidden">
+    <div class="h-scroll-track flex" style="width: 300vw;">
+
+  <!-- Card 1 — Semantic Search Systems -->
+  <div
+    class="h-card relative flex items-center justify-center min-h-screen px-6"
+    style="width: 100vw; flex-shrink: 0; background: linear-gradient(135deg, #0D0D12 0%, #12121a 100%);"
+  >
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 20% 50%, rgba(212,148,60,0.05) 0%, transparent 60%);" aria-hidden="true"></div>
+
+    <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="space-y-6">
+        <div class="font-mono text-sm text-champagne/60 tracking-widest uppercase">01 / 03</div>
+        <h2 class="font-sans font-semibold text-5xl md:text-6xl text-ivory leading-none" style="letter-spacing: -0.03em;">
+          Semantic<br />Search<br />
+          <span style="font-weight: 200; color: #D4943C;">Systems</span>
+        </h2>
+        <p class="text-ivory/50 text-lg leading-relaxed max-w-md">
+          Building retrieval engines that understand meaning, not just keywords.
+          Sub-100ms inference at millions of daily queries across EU job platforms
+          — maintaining nDCG@10 within 1% of full-precision baselines.
+        </p>
+        <div class="flex flex-wrap gap-2 pt-2">
+          {['SentenceTransformers', 'INT8 Quantization', 'Vector Stores', 'Embedding Caching'].map((tag) => (
+            <span class="font-mono text-xs px-3 py-1 rounded-full border" style="color: #D4943C; border-color: rgba(212,148,60,0.25); background: rgba(212,148,60,0.06);">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Neural Constellation — radially masked, no hard boundary -->
+      <div class="flex items-center justify-center" style="height: 420px; width: 420px; position: relative;">
+        <canvas
+          id="constellation-canvas"
+          width="500"
+          height="500"
+          style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);-webkit-mask-image:radial-gradient(ellipse at 50% 50%,black 38%,transparent 68%);mask-image:radial-gradient(ellipse at 50% 50%,black 38%,transparent 68%);"
+        ></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 2 — Agentic Feedback System -->
+  <div
+    class="h-card relative flex items-center justify-center min-h-screen px-6"
+    style="width: 100vw; flex-shrink: 0; background: linear-gradient(135deg, #0e0e16 0%, #0D0D12 100%);"
+  >
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 75% 40%, rgba(212,148,60,0.04) 0%, transparent 60%);" aria-hidden="true"></div>
+
+    <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <!-- Pipeline flow animation -->
+      <div class="flex items-center justify-center order-2 lg:order-1" style="height: 420px; width: 420px; position: relative;">
+        <canvas
+          id="pipeline-canvas"
+          width="500"
+          height="500"
+          style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);-webkit-mask-image:radial-gradient(ellipse at 50% 50%,black 40%,transparent 70%);mask-image:radial-gradient(ellipse at 50% 50%,black 40%,transparent 70%);"
+        ></canvas>
+      </div>
+
+      <div class="space-y-6 order-1 lg:order-2">
+        <div class="font-mono text-sm text-champagne/60 tracking-widest uppercase">02 / 03</div>
+        <h2 class="font-sans font-semibold text-5xl md:text-6xl text-ivory leading-none" style="letter-spacing: -0.03em;">
+          Agentic<br />Feedback
+          <span style="font-weight: 200; color: #D4943C;">System</span>
+        </h2>
+        <p class="text-ivory/50 text-lg leading-relaxed max-w-md">
+          A LangGraph workflow that turns noisy product reports into high-signal tickets.
+          Structured output schemas, PII redaction at the client, LangSmith traces on every
+          run, deployed on AWS Lambda — engineers can reproduce issues in seconds, not days.
+        </p>
+        <div class="flex flex-wrap gap-2 pt-2">
+          {['LangGraph', 'LangSmith', 'AWS Lambda', 'Structured Outputs', 'Privacy-First'].map((tag) => (
+            <span class="font-mono text-xs px-3 py-1 rounded-full border" style="color: #D4943C; border-color: rgba(212,148,60,0.25); background: rgba(212,148,60,0.06);">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3 — Search Relevance & Ranking -->
+  <div
+    class="h-card relative flex items-center justify-center min-h-screen px-6"
+    style="width: 100vw; flex-shrink: 0; background: linear-gradient(135deg, #0D0D12 0%, #0f0f1a 100%);"
+  >
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(ellipse at 50% 80%, rgba(212,148,60,0.04) 0%, transparent 60%);" aria-hidden="true"></div>
+
+    <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="space-y-6">
+        <div class="font-mono text-sm text-champagne/60 tracking-widest uppercase">03 / 03</div>
+        <h2 class="font-sans font-semibold text-5xl md:text-6xl text-ivory leading-none" style="letter-spacing: -0.03em;">
+          Relevance &amp;<br />
+          <span style="font-weight: 200; color: #D4943C;">Ranking</span>
+        </h2>
+        <p class="text-ivory/50 text-lg leading-relaxed max-w-md">
+          Causal inference for ranking policy evaluation. Regression discontinuity
+          designs that reduced false-positive regressions by ~30%, supporting
+          launches with 2–4% uplift in application starts.
+        </p>
+        <div class="flex flex-wrap gap-2 pt-2">
+          {['Causal Inference', 'nDCG@10', 'A/B Testing', 'Policy Evaluation'].map((tag) => (
+            <span class="font-mono text-xs px-3 py-1 rounded-full border" style="color: #D4943C; border-color: rgba(212,148,60,0.25); background: rgba(212,148,60,0.06);">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <!-- EKG — horizontally masked, fades at both ends -->
+      <div class="flex flex-col items-center justify-center" style="height: 420px;">
+        <div style="width:100%;max-width:520px;-webkit-mask-image:linear-gradient(90deg,transparent 0%,black 15%,black 85%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0%,black 15%,black 85%,transparent 100%);overflow:visible;">
+          <svg id="ekg-svg" viewBox="0 0 500 120" width="100%" height="120" style="overflow:visible;">
+            <path id="ekg-path" d="M0,60 L40,60 L55,60 L65,15 L75,105 L85,60 L100,60 L130,60 L145,60 L155,20 L165,100 L175,60 L190,60 L220,60 L235,60 L245,18 L255,102 L265,60 L280,60 L310,60 L325,60 L335,16 L345,104 L355,60 L370,60 L400,60 L415,60 L425,14 L435,106 L445,60 L460,60 L500,60" fill="none" stroke="#D4943C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" />
+            <path d="M0,60 L40,60 L55,60 L65,15 L75,105 L85,60 L100,60 L130,60 L145,60 L155,20 L165,100 L175,60 L190,60 L220,60 L235,60 L245,18 L255,102 L265,60 L280,60 L310,60 L325,60 L335,16 L345,104 L355,60 L370,60 L400,60 L415,60 L425,14 L435,106 L445,60 L460,60 L500,60" fill="none" stroke="#D4943C" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.12" stroke-dasharray="4 8" />
+            <circle id="ekg-dot" cx="0" cy="60" r="3" fill="#D4943C" opacity="0.9" />
+            <circle id="ekg-glow" cx="0" cy="60" r="8" fill="#D4943C" opacity="0.15" />
+          </svg>
+        </div>
+        <div class="flex gap-8 mt-10">
+          <div class="text-center">
+            <div class="font-mono text-2xl font-semibold text-champagne">~30%</div>
+            <div class="font-mono text-xs text-ivory/30 mt-1">fewer false<br />regressions</div>
+          </div>
+          <div class="text-center">
+            <div class="font-mono text-2xl font-semibold text-champagne">2–4%</div>
+            <div class="font-mono text-xs text-ivory/30 mt-1">uplift in<br />applications</div>
+          </div>
+          <div class="text-center">
+            <div class="font-mono text-2xl font-semibold text-champagne">&lt;100ms</div>
+            <div class="font-mono text-xs text-ivory/30 mt-1">query<br />latency</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Horizontal Scroll ──────────────────────────────────────────────
+  const track = document.querySelector('.h-scroll-track') as HTMLElement;
+  const wrap = document.querySelector('.h-scroll-wrap') as HTMLElement;
+
+  if (track && wrap) {
+    const tween = gsap.to(track, {
+      x: () => -(track.scrollWidth - window.innerWidth),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: wrap,
+        start: 'top top',
+        end: () => `+=${track.scrollWidth - window.innerWidth}`,
+        pin: true,
+        scrub: 1,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    // Per-card content entrance — first card animates on section entry,
+    // subsequent cards animate within horizontal scroll
+    document.querySelectorAll('.h-card').forEach((card, idx) => {
+      if (idx === 0) {
+        // First card: trigger when the section enters viewport (no containerAnimation)
+        gsap.fromTo(
+          card.querySelectorAll('.space-y-6 > *'),
+          { y: 40, opacity: 0 },
+          {
+            y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: {
+              trigger: wrap,
+              start: 'top 80%',
+              once: true,
+            },
+          }
+        );
+      } else {
+        gsap.fromTo(
+          card.querySelectorAll('.space-y-6 > *'),
+          { y: 40, opacity: 0 },
+          {
+            y: 0, opacity: 1, stagger: 0.1, duration: 0.8, ease: 'power3.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'left 80%',
+              end: 'left 20%',
+              containerAnimation: tween,
+              once: true,
+            },
+          }
+        );
+      }
+    });
+  }
+
+  // ── Card 1: Semantic Search — Query-to-Document Embedding Space ──
+  const cc = document.getElementById('constellation-canvas') as HTMLCanvasElement;
+  if (cc) {
+    const ctx = cc.getContext('2d')!;
+    const W = 500, CX = 250, CY = 250;
+    const isDarkC1 = () => document.documentElement.classList.contains('dark');
+
+    // Color helper — returns champagne in dark, deep bronze in light
+    const accent = () => isDarkC1() ? [212, 148, 60] : [154, 110, 30];
+    const textCol = () => isDarkC1() ? [250, 248, 245] : [26, 26, 46];
+
+    // Document cluster nodes — 3 groups representing different semantic clusters
+    interface DocNode { x: number; y: number; label: string; cluster: number; }
+    const clusters = [
+      { cx: 160, cy: 130, label: 'Jobs' },   // top-left cluster
+      { cx: 340, cy: 150, label: 'Skills' },  // top-right cluster
+      { cx: 250, cy: 340, label: 'Titles' },  // bottom cluster
+    ];
+    const docs: DocNode[] = [];
+    clusters.forEach((cl, ci) => {
+      for (let i = 0; i < 8; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 25 + Math.random() * 50;
+        docs.push({
+          x: cl.cx + Math.cos(angle) * dist,
+          y: cl.cy + Math.sin(angle) * dist,
+          label: `d${ci * 8 + i}`,
+          cluster: ci,
+        });
+      }
+    });
+
+    // Query point — animated to sweep between clusters
+    let queryAngle = 0;
+
+    function drawSearch() {
+      ctx.clearRect(0, 0, W, W);
+      const t = Date.now() * 0.001;
+      const a = accent();
+      const tc = textCol();
+      queryAngle += 0.004;
+
+      // Query sweeps in a figure-8 pattern through the embedding space
+      const qx = CX + Math.sin(queryAngle) * 100;
+      const qy = CY + Math.sin(queryAngle * 2) * 80;
+
+      // Draw faint coordinate grid
+      ctx.strokeStyle = `rgba(${a[0]},${a[1]},${a[2]},0.04)`;
+      ctx.lineWidth = 0.5;
+      for (let i = 50; i < W; i += 50) {
+        ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, W); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(W, i); ctx.stroke();
+      }
+
+      // Draw cluster boundaries — faint ellipses
+      clusters.forEach((cl) => {
+        ctx.beginPath();
+        ctx.ellipse(cl.cx, cl.cy, 75, 65, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(${a[0]},${a[1]},${a[2]},0.08)`;
+        ctx.lineWidth = 1;
+        ctx.setLineDash([4, 6]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Cluster label
+        ctx.font = '10px "SF Mono", Menlo, monospace';
+        ctx.fillStyle = `rgba(${a[0]},${a[1]},${a[2]},0.3)`;
+        ctx.textAlign = 'center';
+        ctx.fillText(cl.label, cl.cx, cl.cy - 72);
+      });
+
+      // Compute distances from query to all docs, find top-5 nearest
+      const scored = docs.map((d, i) => {
+        const dx = d.x - qx, dy = d.y - qy;
+        return { idx: i, dist: Math.sqrt(dx * dx + dy * dy) };
+      }).sort((a, b) => a.dist - b.dist);
+      const topK = scored.slice(0, 5);
+      const topSet = new Set(topK.map(s => s.idx));
+
+      // Draw similarity beams from query to top-K docs
+      topK.forEach((s) => {
+        const d = docs[s.idx];
+        const sim = Math.max(0, 1 - s.dist / 250);
+        // Animated dashed line
+        const dashOffset = t * 40;
+        ctx.beginPath();
+        ctx.moveTo(qx, qy);
+        ctx.lineTo(d.x, d.y);
+        ctx.strokeStyle = `rgba(${a[0]},${a[1]},${a[2]},${sim * 0.5})`;
+        ctx.lineWidth = 1.5 * sim + 0.5;
+        ctx.setLineDash([6, 4]);
+        ctx.lineDashOffset = -dashOffset;
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Similarity score label at midpoint
+        const mx = (qx + d.x) / 2, my = (qy + d.y) / 2;
+        ctx.font = '9px "SF Mono", Menlo, monospace';
+        ctx.fillStyle = `rgba(${a[0]},${a[1]},${a[2]},${sim * 0.7})`;
+        ctx.textAlign = 'center';
+        ctx.fillText(sim.toFixed(2), mx, my - 5);
+      });
+
+      // Draw document nodes
+      docs.forEach((d, i) => {
+        const isMatch = topSet.has(i);
+        const r = isMatch ? 5 : 3;
+        const alpha = isMatch ? 0.85 : 0.3;
+
+        // Glow for matched docs
+        if (isMatch) {
+          const gr = ctx.createRadialGradient(d.x, d.y, r, d.x, d.y, r + 12);
+          gr.addColorStop(0, `rgba(${a[0]},${a[1]},${a[2]},0.25)`);
+          gr.addColorStop(1, `rgba(${a[0]},${a[1]},${a[2]},0)`);
+          ctx.beginPath(); ctx.arc(d.x, d.y, r + 12, 0, Math.PI * 2);
+          ctx.fillStyle = gr; ctx.fill();
+        }
+
+        // Doc circle — filled squares for documents
+        ctx.beginPath();
+        const sz = r * 1.4;
+        ctx.roundRect(d.x - sz, d.y - sz, sz * 2, sz * 2, 2);
+        ctx.fillStyle = `rgba(${a[0]},${a[1]},${a[2]},${alpha})`;
+        ctx.fill();
+      });
+
+      // Draw query point — distinctive circle with crosshair
+      const qPulse = 0.5 + 0.5 * Math.sin(t * 3);
+      // Outer glow
+      const qGlow = ctx.createRadialGradient(qx, qy, 0, qx, qy, 28);
+      qGlow.addColorStop(0, `rgba(${a[0]},${a[1]},${a[2]},${0.15 + qPulse * 0.1})`);
+      qGlow.addColorStop(1, `rgba(${a[0]},${a[1]},${a[2]},0)`);
+      ctx.beginPath(); ctx.arc(qx, qy, 28, 0, Math.PI * 2);
+      ctx.fillStyle = qGlow; ctx.fill();
+
+      // Query circle
+      ctx.beginPath(); ctx.arc(qx, qy, 8, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${a[0]},${a[1]},${a[2]},0.9)`;
+      ctx.fill();
+      ctx.strokeStyle = `rgba(${tc[0]},${tc[1]},${tc[2]},0.3)`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Crosshair lines
+      ctx.strokeStyle = `rgba(${a[0]},${a[1]},${a[2]},0.35)`;
+      ctx.lineWidth = 0.5;
+      ctx.beginPath(); ctx.moveTo(qx - 16, qy); ctx.lineTo(qx - 10, qy); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(qx + 10, qy); ctx.lineTo(qx + 16, qy); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(qx, qy - 16); ctx.lineTo(qx, qy - 10); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(qx, qy + 10); ctx.lineTo(qx, qy + 16); ctx.stroke();
+
+      // "query" label
+      ctx.font = 'bold 10px "SF Mono", Menlo, monospace';
+      ctx.fillStyle = `rgba(${a[0]},${a[1]},${a[2]},0.8)`;
+      ctx.textAlign = 'center';
+      ctx.fillText('query', qx, qy - 18);
+
+      requestAnimationFrame(drawSearch);
+    }
+    drawSearch();
+  }
+
+  // ── Card 2: Agentic Feedback — Cyclic Agent Workflow ─────────────
+  const pc = document.getElementById('pipeline-canvas') as HTMLCanvasElement;
+  if (pc) {
+    const ctx2 = pc.getContext('2d')!;
+    const W2 = 500;
+    const isDarkC2 = () => document.documentElement.classList.contains('dark');
+    const a2 = () => isDarkC2() ? [212, 148, 60] : [154, 110, 30];
+    const tc2 = () => isDarkC2() ? [250, 248, 245] : [26, 26, 46];
+
+    // Agent nodes arranged in a hexagonal cycle with a feedback loop
+    interface AgentNode { id: string; x: number; y: number; label: string; icon: string; w: number; h: number; }
+    const agentNodes: AgentNode[] = [
+      { id: 'ingest',   x: 250, y: 55,  label: 'Ingest',      icon: '>>',  w: 70, h: 28 },
+      { id: 'redact',   x: 410, y: 130, label: 'PII Redact',  icon: '***', w: 78, h: 28 },
+      { id: 'classify', x: 410, y: 250, label: 'Classify',     icon: '?=',  w: 74, h: 28 },
+      { id: 'extract',  x: 250, y: 360, label: 'Extract',      icon: '{}',  w: 70, h: 28 },
+      { id: 'validate', x: 90,  y: 250, label: 'Validate',     icon: '✓?',  w: 74, h: 28 },
+      { id: 'output',   x: 90,  y: 130, label: 'Ticket',       icon: '→',   w: 64, h: 28 },
+    ];
+
+    // Edges: main cycle + feedback loops
+    interface AgentEdge { from: string; to: string; feedback?: boolean; }
+    const agentEdges: AgentEdge[] = [
+      { from: 'ingest', to: 'redact' },
+      { from: 'redact', to: 'classify' },
+      { from: 'classify', to: 'extract' },
+      { from: 'extract', to: 'validate' },
+      { from: 'validate', to: 'output' },
+      { from: 'validate', to: 'classify', feedback: true },  // retry loop
+      { from: 'output', to: 'ingest', feedback: true },      // next report
+    ];
+
+    const nMap2 = Object.fromEntries(agentNodes.map(n => [n.id, n]));
+
+    // Agent decision node in center
+    const agentCenter = { x: 250, y: 205, r: 32 };
+
+    type AgentPulse = { edge: AgentEdge; progress: number; speed: number; };
+    const agentPulses: AgentPulse[] = [];
+    const nodeGlow: Record<string, number> = {};
+    agentNodes.forEach(n => { nodeGlow[n.id] = 0; });
+    let lastSpawn = 0, edgeIdx = 0;
+
+    function drawBezierEdge(from: AgentNode, to: AgentNode, feedback: boolean, ac: number[]) {
+      const fx = from.x, fy = from.y, tx = to.x, ty = to.y;
+      ctx2.beginPath();
+      if (feedback) {
+        // Curved feedback arrow
+        const midx = (fx + tx) / 2 + (fy > ty ? -80 : 80);
+        const midy = (fy + ty) / 2;
+        ctx2.moveTo(fx, fy);
+        ctx2.quadraticCurveTo(midx, midy, tx, ty);
+        ctx2.strokeStyle = `rgba(${ac[0]},${ac[1]},${ac[2]},0.08)`;
+        ctx2.setLineDash([4, 6]);
+      } else {
+        ctx2.moveTo(fx, fy);
+        ctx2.lineTo(tx, ty);
+        ctx2.strokeStyle = `rgba(${ac[0]},${ac[1]},${ac[2]},0.15)`;
+        ctx2.setLineDash([]);
+      }
+      ctx2.lineWidth = 1;
+      ctx2.stroke();
+      ctx2.setLineDash([]);
+
+      // Arrowhead
+      const angle = Math.atan2(ty - fy, tx - fx);
+      const arrLen = 8;
+      const arrX = feedback ? tx : tx - Math.cos(angle) * (to.w / 2 + 2);
+      const arrY = feedback ? ty : ty - Math.sin(angle) * (to.h / 2 + 2);
+      ctx2.beginPath();
+      ctx2.moveTo(arrX, arrY);
+      ctx2.lineTo(arrX - Math.cos(angle - 0.4) * arrLen, arrY - Math.sin(angle - 0.4) * arrLen);
+      ctx2.moveTo(arrX, arrY);
+      ctx2.lineTo(arrX - Math.cos(angle + 0.4) * arrLen, arrY - Math.sin(angle + 0.4) * arrLen);
+      ctx2.strokeStyle = `rgba(${ac[0]},${ac[1]},${ac[2]},${feedback ? 0.12 : 0.2})`;
+      ctx2.lineWidth = 1;
+      ctx2.stroke();
+    }
+
+    function getPointOnEdge(edge: AgentEdge, p: number): { x: number; y: number } {
+      const from = nMap2[edge.from], to = nMap2[edge.to];
+      if (edge.feedback) {
+        const midx = (from.x + to.x) / 2 + (from.y > to.y ? -80 : 80);
+        const midy = (from.y + to.y) / 2;
+        const t = p;
+        const x = (1 - t) * (1 - t) * from.x + 2 * (1 - t) * t * midx + t * t * to.x;
+        const y = (1 - t) * (1 - t) * from.y + 2 * (1 - t) * t * midy + t * t * to.y;
+        return { x, y };
+      }
+      return { x: from.x + (to.x - from.x) * p, y: from.y + (to.y - from.y) * p };
+    }
+
+    function drawAgent(ts: number) {
+      ctx2.clearRect(0, 0, W2, W2);
+      const t = ts * 0.001;
+      const ac = a2();
+      const tc = tc2();
+
+      // Spawn pulse on edge
+      if (ts - lastSpawn > 700) {
+        const edge = agentEdges[edgeIdx % agentEdges.length];
+        agentPulses.push({ edge, progress: 0, speed: 0.012 + Math.random() * 0.008 });
+        edgeIdx++;
+        lastSpawn = ts;
+      }
+
+      // Draw central "Agent" brain
+      const cPulse = 0.5 + 0.5 * Math.sin(t * 2);
+      const cGrad = ctx2.createRadialGradient(agentCenter.x, agentCenter.y, 0, agentCenter.x, agentCenter.y, agentCenter.r + 20);
+      cGrad.addColorStop(0, `rgba(${ac[0]},${ac[1]},${ac[2]},${0.06 + cPulse * 0.04})`);
+      cGrad.addColorStop(1, `rgba(${ac[0]},${ac[1]},${ac[2]},0)`);
+      ctx2.beginPath(); ctx2.arc(agentCenter.x, agentCenter.y, agentCenter.r + 20, 0, Math.PI * 2);
+      ctx2.fillStyle = cGrad; ctx2.fill();
+
+      // Rotating ring
+      ctx2.beginPath();
+      ctx2.arc(agentCenter.x, agentCenter.y, agentCenter.r, t * 0.5, t * 0.5 + Math.PI * 1.5);
+      ctx2.strokeStyle = `rgba(${ac[0]},${ac[1]},${ac[2]},0.3)`;
+      ctx2.lineWidth = 1.5;
+      ctx2.stroke();
+
+      ctx2.font = 'bold 10px "SF Mono", Menlo, monospace';
+      ctx2.fillStyle = `rgba(${ac[0]},${ac[1]},${ac[2]},0.7)`;
+      ctx2.textAlign = 'center'; ctx2.textBaseline = 'middle';
+      ctx2.fillText('AGENT', agentCenter.x, agentCenter.y - 5);
+      ctx2.font = '8px "SF Mono", Menlo, monospace';
+      ctx2.fillStyle = `rgba(${ac[0]},${ac[1]},${ac[2]},0.35)`;
+      ctx2.fillText('LangGraph', agentCenter.x, agentCenter.y + 8);
+
+      // Faint connector lines from center to each node
+      agentNodes.forEach(n => {
+        ctx2.beginPath();
+        ctx2.moveTo(agentCenter.x, agentCenter.y);
+        ctx2.lineTo(n.x, n.y);
+        ctx2.strokeStyle = `rgba(${ac[0]},${ac[1]},${ac[2]},0.04)`;
+        ctx2.lineWidth = 0.5;
+        ctx2.stroke();
+      });
+
+      // Draw edges
+      agentEdges.forEach(edge => {
+        drawBezierEdge(nMap2[edge.from], nMap2[edge.to], !!edge.feedback, ac);
+      });
+
+      // Update and draw pulses
+      for (let i = agentPulses.length - 1; i >= 0; i--) {
+        const pu = agentPulses[i];
+        pu.progress += pu.speed;
+        if (pu.progress >= 1) {
+          nodeGlow[pu.edge.to] = 1;
+          agentPulses.splice(i, 1);
+          continue;
+        }
+        const pt = getPointOnEdge(pu.edge, pu.progress);
+        const pg = ctx2.createRadialGradient(pt.x, pt.y, 0, pt.x, pt.y, 10);
+        pg.addColorStop(0, `rgba(${ac[0]},${ac[1]},${ac[2]},0.8)`);
+        pg.addColorStop(1, `rgba(${ac[0]},${ac[1]},${ac[2]},0)`);
+        ctx2.beginPath(); ctx2.arc(pt.x, pt.y, 10, 0, Math.PI * 2);
+        ctx2.fillStyle = pg; ctx2.fill();
+        ctx2.beginPath(); ctx2.arc(pt.x, pt.y, 3, 0, Math.PI * 2);
+        ctx2.fillStyle = `rgba(${ac[0]},${ac[1]},${ac[2]},0.9)`;
+        ctx2.fill();
+      }
+
+      // Draw nodes (rounded rectangles)
+      agentNodes.forEach(n => {
+        if (nodeGlow[n.id] > 0) nodeGlow[n.id] = Math.max(0, nodeGlow[n.id] - 0.012);
+        const gl = nodeGlow[n.id];
+
+        // Node glow
+        if (gl > 0.05) {
+          const ng = ctx2.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.w / 2 + 15);
+          ng.addColorStop(0, `rgba(${ac[0]},${ac[1]},${ac[2]},${gl * 0.25})`);
+          ng.addColorStop(1, `rgba(${ac[0]},${ac[1]},${ac[2]},0)`);
+          ctx2.beginPath(); ctx2.arc(n.x, n.y, n.w / 2 + 15, 0, Math.PI * 2);
+          ctx2.fillStyle = ng; ctx2.fill();
+        }
+
+        // Rounded rect
+        const rx = n.x - n.w / 2, ry = n.y - n.h / 2;
+        ctx2.beginPath();
+        ctx2.roundRect(rx, ry, n.w, n.h, 6);
+        ctx2.fillStyle = `rgba(${ac[0]},${ac[1]},${ac[2]},${0.08 + gl * 0.15})`;
+        ctx2.fill();
+        ctx2.strokeStyle = `rgba(${ac[0]},${ac[1]},${ac[2]},${0.2 + gl * 0.5})`;
+        ctx2.lineWidth = 1;
+        ctx2.stroke();
+
+        // Label
+        ctx2.font = '10px "SF Mono", Menlo, monospace';
+        ctx2.fillStyle = `rgba(${ac[0]},${ac[1]},${ac[2]},${0.55 + gl * 0.45})`;
+        ctx2.textAlign = 'center'; ctx2.textBaseline = 'middle';
+        ctx2.fillText(n.label, n.x, n.y);
+      });
+
+      requestAnimationFrame(drawAgent);
+    }
+    requestAnimationFrame(drawAgent);
+  }
+
+  // ── Card 3: EKG ───────────────────────────────────────────────────
+  const ekgPath = document.getElementById('ekg-path') as SVGPathElement;
+  const ekgDot = document.getElementById('ekg-dot');
+  const ekgGlow = document.getElementById('ekg-glow');
+  if (ekgPath && ekgDot && ekgGlow) {
+    const len = ekgPath.getTotalLength();
+    ekgPath.style.strokeDasharray = String(len);
+    ekgPath.style.strokeDashoffset = String(len);
+    gsap.to(ekgPath, {
+      strokeDashoffset: 0, duration: 3, ease: 'power2.inOut',
+      repeat: -1, repeatDelay: 0.8,
+      onUpdate() {
+        const pr = 1 - parseFloat(ekgPath.style.strokeDashoffset) / len;
+        const pt = ekgPath.getPointAtLength(pr * len);
+        ekgDot.setAttribute('cx', String(pt.x)); ekgDot.setAttribute('cy', String(pt.y));
+        ekgGlow.setAttribute('cx', String(pt.x)); ekgGlow.setAttribute('cy', String(pt.y));
+      },
+      onRepeat() { ekgPath.style.strokeDashoffset = String(len); },
+    });
+  }
+</script>

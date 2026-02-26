@@ -1,0 +1,99 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+const posts = allPosts
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+function formatDate(d: Date) {
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+---
+
+<Layout
+  title="Blog — Nitin Mohan"
+  description="Writing on NLP, semantic search, production ML systems, and evaluation methodology."
+>
+  <section class="min-h-screen pt-32 pb-24 px-6">
+    <div class="max-w-3xl mx-auto">
+      <!-- Header -->
+      <div class="mb-16 space-y-4">
+        <div class="font-mono text-sm text-champagne/60 tracking-widest uppercase">Writing</div>
+        <h1
+          class="font-sans font-semibold text-5xl md:text-6xl text-ivory leading-none"
+          style="letter-spacing: -0.03em;"
+        >
+          Thinking out<br />
+          <span style="font-weight: 200; color: #D4943C;">loud.</span>
+        </h1>
+        <p class="text-ivory/40 text-base leading-relaxed max-w-lg">
+          On NLP, semantic search, production ML systems, evaluation methodology,
+          and the craft of shipping models that actually work.
+        </p>
+      </div>
+
+      <!-- Posts list -->
+      {posts.length === 0 ? (
+        <div class="text-center py-24 space-y-3">
+          <div class="font-mono text-4xl text-ivory/10">∅</div>
+          <div class="font-mono text-xs text-ivory/25">No posts yet. Check back soon.</div>
+        </div>
+      ) : (
+        <div class="space-y-1">
+          {posts.map((post, i) => (
+            <a
+              href={`/blog/${post.slug}`}
+              class="group block px-6 py-6 rounded-3xl transition-all duration-300 hover:bg-white/[0.03]"
+              style="border: 1px solid transparent; transition: border-color 0.3s, background 0.3s;"
+              onmouseover="this.style.borderColor='rgba(212,148,60,0.15)'"
+              onmouseout="this.style.borderColor='transparent'"
+            >
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex-1 space-y-2">
+                  <div class="flex items-center gap-3">
+                    <span class="font-mono text-xs text-ivory/20">{String(i + 1).padStart(2, '0')}</span>
+                    <div class="flex flex-wrap gap-1.5">
+                      {post.data.tags?.map((tag: string) => (
+                        <span
+                          class="font-mono text-xs px-2 py-0.5 rounded-full"
+                          style="background: rgba(212,148,60,0.07); color: rgba(212,148,60,0.7);"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <h2
+                    class="font-sans font-bold text-xl text-ivory/90 group-hover:text-ivory transition-colors leading-snug"
+                    style="letter-spacing: -0.02em;"
+                  >
+                    {post.data.title}
+                  </h2>
+                  <p class="text-ivory/40 text-sm leading-relaxed">{post.data.excerpt}</p>
+                </div>
+                <div class="shrink-0 flex flex-col items-end gap-2">
+                  <span class="font-mono text-xs text-ivory/25">{formatDate(post.data.date)}</span>
+                  <svg
+                    class="text-ivory/20 group-hover:text-champagne group-hover:translate-x-1 transition-all"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

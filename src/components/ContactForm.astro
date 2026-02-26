@@ -1,0 +1,307 @@
+---
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+---
+
+<section id="contact" class="py-32 px-6">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header -->
+    <div class="mb-16 space-y-4">
+      <div class="font-mono text-sm text-champagne/80 tracking-widest uppercase">
+        Get in Touch
+      </div>
+      <h2 class="font-sans font-semibold text-5xl md:text-6xl text-ivory leading-none" style="letter-spacing: -0.03em;">
+        Let's build<br />something
+        <span style="font-weight: 200; color: #D4943C;">precise.</span>
+      </h2>
+      <p class="text-ivory/40 text-lg max-w-lg leading-relaxed">
+        Open to senior IC roles, research collaborations, and consulting.
+        Tell me about your problem — I'll be direct about whether I'm the right fit.
+      </p>
+    </div>
+
+    <!-- Tab toggle -->
+    <div class="flex gap-1 mb-10 p-1 w-fit rounded-full" style="background: rgba(250,248,245,0.04); border: 1px solid rgba(250,248,245,0.08);">
+      <button
+        id="tab-form"
+        class="tab-btn px-5 py-2 rounded-full text-sm font-medium transition-all active-tab"
+        onclick="switchTab('form')"
+      >
+        Send a message
+      </button>
+      <button
+        id="tab-cal"
+        class="tab-btn px-5 py-2 rounded-full text-sm font-medium transition-all"
+        onclick="switchTab('cal')"
+      >
+        Book a call
+      </button>
+    </div>
+
+    <!-- Contact Form Panel -->
+    <div id="panel-form" class="transition-all duration-300">
+      <form
+        id="contact-form"
+        class="space-y-5"
+        novalidate
+      >
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Name -->
+          <div class="space-y-2">
+            <label for="name" class="font-mono text-xs text-ivory/55 tracking-widest uppercase">Name</label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              required
+              placeholder="Your name"
+              class="form-input w-full px-5 py-4 rounded-2xl bg-white/[0.03] border text-ivory text-sm placeholder-ivory/20 outline-none focus:ring-0 transition-all"
+            />
+          </div>
+          <!-- Email -->
+          <div class="space-y-2">
+            <label for="email" class="font-mono text-xs text-ivory/55 tracking-widest uppercase">Email</label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              placeholder="you@company.com"
+              class="form-input w-full px-5 py-4 rounded-2xl bg-white/[0.03] border text-ivory text-sm placeholder-ivory/20 outline-none focus:ring-0 transition-all"
+            />
+          </div>
+        </div>
+
+        <!-- Subject -->
+        <div class="space-y-2">
+          <label for="subject" class="font-mono text-xs text-ivory/55 tracking-widest uppercase">What's the opportunity?</label>
+          <select
+            id="subject"
+            name="subject"
+            class="form-input w-full px-5 py-4 rounded-2xl bg-white/[0.03] border text-ivory text-sm outline-none focus:ring-0 transition-all appearance-none"
+          >
+            <option value="">Select one...</option>
+            <option value="full-time">Full-time role</option>
+            <option value="consulting">Consulting / contract</option>
+            <option value="research">Research collaboration</option>
+            <option value="speaking">Speaking / advisory</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <!-- Message -->
+        <div class="space-y-2">
+          <label for="message" class="font-mono text-xs text-ivory/55 tracking-widest uppercase">Tell me about it</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            placeholder="Briefly describe the problem you're working on, the team, and why you think I'd be a good fit..."
+            class="form-input w-full px-5 py-4 rounded-2xl bg-white/[0.03] border text-ivory text-sm placeholder-ivory/20 outline-none focus:ring-0 transition-all resize-none"
+            style="border-color: rgba(250,248,245,0.1);"
+          ></textarea>
+        </div>
+
+        <!-- Cloudflare Turnstile -->
+        {turnstileSiteKey && (
+          <div id="turnstile-container">
+            <div
+              class="cf-turnstile"
+              data-sitekey={turnstileSiteKey}
+              data-theme="dark"
+              data-size="flexible"
+            ></div>
+          </div>
+        )}
+
+        <!-- Error / Success messages -->
+        <div id="form-error" class="hidden font-mono text-xs text-red-400 px-4 py-3 rounded-2xl" style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2);">
+          Something went wrong. Please try again.
+        </div>
+        <div id="form-success" class="hidden font-mono text-xs text-green-400 px-4 py-3 rounded-2xl" style="background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2);">
+          Message received. I'll be in touch within 48 hours.
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn-primary w-full sm:w-auto justify-center py-4 px-8 text-sm" id="submit-btn">
+          <span id="submit-text">Send Message</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- Cal.com Panel -->
+    <div id="panel-cal" class="hidden transition-all duration-300">
+      <div
+        class="rounded-4xl overflow-hidden p-1"
+        style="background: rgba(250,248,245,0.03); border: 1px solid rgba(250,248,245,0.08);"
+      >
+        <div id="cal-inline" style="min-height: 500px; width: 100%;"></div>
+        <p class="text-center font-mono text-xs text-ivory/20 py-4">
+          Powered by Cal.com · Synced with Google Calendar
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Turnstile script -->
+{turnstileSiteKey && (
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+)}
+
+<script>
+  // Tab switching
+  function switchTab(tab: string) {
+    const formPanel = document.getElementById('panel-form');
+    const calPanel = document.getElementById('panel-cal');
+    const formBtn = document.getElementById('tab-form');
+    const calBtn = document.getElementById('tab-cal');
+
+    if (tab === 'form') {
+      formPanel?.classList.remove('hidden');
+      calPanel?.classList.add('hidden');
+      formBtn?.classList.add('active-tab');
+      calBtn?.classList.remove('active-tab');
+    } else {
+      calPanel?.classList.remove('hidden');
+      formPanel?.classList.add('hidden');
+      calBtn?.classList.add('active-tab');
+      formBtn?.classList.remove('active-tab');
+
+      // Lazy load Cal.com embed
+      if (!window.__calLoaded) {
+        window.__calLoaded = true;
+        const script = document.createElement('script');
+        script.innerHTML = `
+          (function (C, A, L) {
+            let p = function (a, ar) { a.q.push(ar); };
+            let d = C.document;
+            C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){ cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["-", ar]); } else { p(cal, ar); } return; } p(cal, ar); };
+          })(window, "https://app.cal.com/embed/embed.js", "init");
+          Cal("init", {origin:"https://app.cal.com"});
+          Cal("inline", {
+            elementOrSelector:"#cal-inline",
+            calLink: "nitinmohan/30min",
+            layout: "month_view"
+          });
+          Cal("ui", {
+            theme: "dark",
+            hideEventTypeDetails: false,
+            layout: "month_view",
+            cssVarsPerTheme: {
+              dark: {
+                "cal-brand": "#D4943C",
+                "cal-brand-emphasis": "#C4842C",
+                "cal-text": "#FAF8F5",
+                "cal-text-emphasis": "#FAF8F5"
+              }
+            }
+          });
+        `;
+        document.body.appendChild(script);
+      }
+    }
+  }
+
+  // Make switchTab available globally
+  (window as any).switchTab = switchTab;
+
+  // Form input focus effects
+  document.querySelectorAll('.form-input').forEach((input) => {
+    input.addEventListener('focus', () => {
+      (input as HTMLElement).style.borderColor = 'rgba(212, 148, 60, 0.5)';
+      (input as HTMLElement).style.background = 'rgba(212, 148, 60, 0.03)';
+    });
+    input.addEventListener('blur', () => {
+      (input as HTMLElement).style.borderColor = '';
+      (input as HTMLElement).style.background = '';
+    });
+  });
+
+  // Form submission
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn');
+  const submitText = document.getElementById('submit-text');
+  const formError = document.getElementById('form-error');
+  const formSuccess = document.getElementById('form-success');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formError?.classList.add('hidden');
+    formSuccess?.classList.add('hidden');
+
+    const name = (document.getElementById('name') as HTMLInputElement).value.trim();
+    const email = (document.getElementById('email') as HTMLInputElement).value.trim();
+    const message = (document.getElementById('message') as HTMLTextAreaElement).value.trim();
+
+    if (!name || !email || !message) {
+      formError!.textContent = 'Please fill in all required fields.';
+      formError?.classList.remove('hidden');
+      return;
+    }
+
+    // Basic email validation
+    const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRx.test(email)) {
+      formError!.textContent = 'Please enter a valid email address.';
+      formError?.classList.remove('hidden');
+      return;
+    }
+
+    // Get Turnstile token if present
+    let turnstileToken = '';
+    const cfInput = form.querySelector('[name="cf-turnstile-response"]') as HTMLInputElement;
+    if (cfInput) {
+      turnstileToken = cfInput.value;
+    }
+
+    if (submitBtn) submitBtn.setAttribute('disabled', 'true');
+    if (submitText) submitText.textContent = 'Sending...';
+
+    try {
+      // Verify Turnstile if token present
+      if (turnstileToken) {
+        const verifyRes = await fetch('/api/verify-captcha', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: turnstileToken }),
+        });
+        const verifyData = await verifyRes.json();
+        if (!verifyData.success) {
+          throw new Error('CAPTCHA verification failed');
+        }
+      }
+
+      // In production, send to your email service or API
+      // For now, simulate success
+      await new Promise((r) => setTimeout(r, 800));
+      formSuccess?.classList.remove('hidden');
+      form.reset();
+    } catch {
+      formError?.classList.remove('hidden');
+    } finally {
+      if (submitBtn) submitBtn.removeAttribute('disabled');
+      if (submitText) submitText.textContent = 'Send Message';
+    }
+  });
+</script>
+
+<style>
+  .active-tab {
+    background: rgba(212, 148, 60, 0.15);
+    color: #d4943c;
+    border: 1px solid rgba(212, 148, 60, 0.25);
+  }
+
+  .tab-btn:not(.active-tab) {
+    color: rgba(250, 248, 245, 0.4);
+  }
+</style>
+
+<script>
+  declare global {
+    interface Window {
+      __calLoaded?: boolean;
+    }
+  }
+</script>

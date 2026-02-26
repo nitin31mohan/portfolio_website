@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.astro/
+
+# Vercel
+.vercel/
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# ML model cache (auto-downloaded at build)
+.model-cache/
+
+# Auto-generated embeddings (rebuilt via `npm run build`)
+public/qa-embeddings.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing artifacts
+test-results/
+.playwright/
+
+# Development screenshots
+.screenshots/
+
+# Claude Code local config
+.claude/settings.local.json
+
+# Logs
+*.log
+npm-debug.log*
+.claude/

@@ -1,0 +1,289 @@
+---
+import Layout from '@/layouts/Layout.astro';
+---
+
+<Layout
+  title="Ask Nitin — Semantic FAQ"
+  description="Ask any question about Nitin Mohan's experience, skills, and work. Powered by in-browser semantic search."
+>
+  <section class="min-h-screen pt-32 pb-24 px-6">
+    <div class="max-w-3xl mx-auto">
+      <!-- Header -->
+      <div class="mb-12 space-y-4">
+        <div class="font-mono text-sm text-champagne/60 tracking-widest uppercase">
+          Semantic FAQ
+        </div>
+        <h1
+          class="font-sans font-semibold text-5xl md:text-6xl text-ivory leading-none"
+          style="letter-spacing: -0.03em;"
+        >
+          Ask me<br />
+          <span style="font-weight: 200; color: #D4943C;">anything.</span>
+        </h1>
+        <p class="text-ivory/50 text-base leading-relaxed max-w-md">
+          Type a question about my experience, skills, or background. Answers
+          are matched using semantic similarity.
+        </p>
+        <div class="flex items-center gap-2 font-mono text-xs text-ivory/25">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 8v4l3 3"></path>
+          </svg>
+          <span id="model-status">Loading semantic model... (~25MB, first visit only)</span>
+        </div>
+      </div>
+
+      <!-- Search input -->
+      <div class="relative mb-8">
+        <div
+          class="flex items-center gap-3 px-5 py-4 rounded-3xl transition-all duration-300"
+          id="search-wrapper"
+          style="background: var(--surface); border: 1px solid var(--border);"
+        >
+          <svg
+            id="search-icon"
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            class="text-ivory/30 shrink-0"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.35-4.35"></path>
+          </svg>
+          <input
+            id="ask-input"
+            type="text"
+            placeholder="What have you built at Stepstone?"
+            class="flex-1 bg-transparent text-ivory text-base outline-none placeholder-ivory/20"
+            autocomplete="off"
+            disabled
+          />
+          <div id="loading-spinner" class="hidden shrink-0">
+            <svg class="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4943C" stroke-width="2">
+              <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Answer card -->
+      <div
+        id="answer-card"
+        class="hidden rounded-4xl overflow-hidden transition-all duration-500"
+        style="background: rgba(250,248,245,0.03); border: 1px solid rgba(250,248,245,0.08);"
+      >
+        <div class="px-8 py-6 space-y-4">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <div class="font-mono text-xs text-ivory/30 mb-1 tracking-widest uppercase">Best match</div>
+              <div id="matched-question" class="text-ivory/60 text-sm italic"></div>
+            </div>
+            <div
+              id="confidence-badge"
+              class="shrink-0 font-mono text-xs px-3 py-1 rounded-full"
+              style="background: rgba(212,148,60,0.1); border: 1px solid rgba(212,148,60,0.25); color: #D4943C;"
+            ></div>
+          </div>
+          <div
+            class="w-full h-px"
+            style="background: rgba(250,248,245,0.06);"
+          ></div>
+          <p id="answer-text" class="text-ivory/80 text-base leading-relaxed"></p>
+        </div>
+      </div>
+
+      <!-- Low confidence notice -->
+      <div
+        id="low-confidence"
+        class="hidden mt-4 px-5 py-3 rounded-2xl font-mono text-xs text-ivory/30"
+        style="background: rgba(250,248,245,0.02); border: 1px solid rgba(250,248,245,0.06);"
+      >
+        Low confidence match. Try rephrasing or
+        <a href="/#contact" class="text-champagne hover:underline">ask me directly</a>.
+      </div>
+
+      <!-- Suggested questions -->
+      <div class="mt-12 space-y-4" id="suggestions">
+        <div class="font-mono text-xs text-ivory/25 tracking-widest uppercase">Try asking</div>
+        <div class="flex flex-wrap gap-2" id="suggestion-list">
+          {[
+            'What is your current role?',
+            'Tell me about your semantic search work',
+            'What are your core technical skills?',
+            'Tell me about your research at IDIAP',
+            'What is your experience with LoRA?',
+            'How do you evaluate retrieval systems?',
+          ].map((q) => (
+            <button
+              class="suggestion-pill font-mono text-xs px-4 py-2 rounded-full transition-all hover:scale-105"
+              style="background: rgba(250,248,245,0.04); border: 1px solid rgba(250,248,245,0.08); color: rgba(250,248,245,0.5);"
+              data-question={q}
+            >
+              {q}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Log counter (hidden, for Redis) -->
+      <div id="qa-log-meta" class="hidden" data-matched=""></div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  // @ts-ignore — transformers.js is loaded via npm
+  import { pipeline, env } from '@xenova/transformers';
+
+  // Point to CDN cached models
+  env.allowLocalModels = false;
+  env.useBrowserCache = true;
+
+  const modelStatus = document.getElementById('model-status')!;
+  const askInput = document.getElementById('ask-input') as HTMLInputElement;
+  const searchWrapper = document.getElementById('search-wrapper')!;
+  const loadingSpinner = document.getElementById('loading-spinner')!;
+  const answerCard = document.getElementById('answer-card')!;
+  const matchedQuestion = document.getElementById('matched-question')!;
+  const answerText = document.getElementById('answer-text')!;
+  const confidenceBadge = document.getElementById('confidence-badge')!;
+  const lowConfidence = document.getElementById('low-confidence')!;
+
+  let extractor: any = null;
+  let qaData: { question: string; answer: string; embedding: number[] }[] = [];
+  let debounceTimer: ReturnType<typeof setTimeout>;
+
+  // Load model and embeddings in parallel
+  async function init() {
+    try {
+      const [modelRes, embeddingsRes] = await Promise.all([
+        pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', {
+          progress_callback: (p: any) => {
+            if (p.status === 'downloading') {
+              const pct = p.loaded && p.total ? Math.round((p.loaded / p.total) * 100) : '...';
+              modelStatus.textContent = `Downloading model: ${pct}%`;
+            }
+          },
+        }),
+        fetch('/qa-embeddings.json').then((r) => r.json()).catch(() => null),
+      ]);
+
+      extractor = modelRes;
+      if (embeddingsRes) {
+        qaData = embeddingsRes;
+        modelStatus.textContent = 'Ready';
+        askInput.disabled = false;
+        askInput.placeholder = 'What have you built at Stepstone?';
+        searchWrapper.style.borderColor = 'rgba(212, 148, 60, 0.3)';
+      } else {
+        modelStatus.textContent = 'Embeddings not found. Run npm run build first.';
+      }
+    } catch (err) {
+      modelStatus.textContent = 'Failed to load model. Check console.';
+      console.error(err);
+    }
+  }
+
+  function cosineSim(a: number[], b: number[]): number {
+    let dot = 0, normA = 0, normB = 0;
+    for (let i = 0; i < a.length; i++) {
+      dot += a[i] * b[i];
+      normA += a[i] * a[i];
+      normB += b[i] * b[i];
+    }
+    return dot / (Math.sqrt(normA) * Math.sqrt(normB));
+  }
+
+  async function search(query: string) {
+    if (!extractor || !qaData.length || !query.trim()) {
+      answerCard.classList.add('hidden');
+      lowConfidence.classList.add('hidden');
+      return;
+    }
+
+    loadingSpinner.classList.remove('hidden');
+
+    try {
+      const output = await extractor(query, { pooling: 'mean', normalize: true });
+      const queryEmbedding = Array.from(output.data as Float32Array);
+
+      let best = { index: -1, score: -1 };
+      qaData.forEach((item, i) => {
+        const score = cosineSim(queryEmbedding, item.embedding);
+        if (score > best.score) {
+          best = { index: i, score };
+        }
+      });
+
+      const THRESHOLD = 0.45;
+      const match = qaData[best.index];
+      const pct = Math.round(best.score * 100);
+
+      answerCard.classList.remove('hidden');
+      matchedQuestion.textContent = `"${match.question}"`;
+      answerText.textContent = match.answer;
+      confidenceBadge.textContent = `${pct}% match`;
+
+      if (best.score < THRESHOLD) {
+        lowConfidence.classList.remove('hidden');
+        confidenceBadge.style.background = 'rgba(239,68,68,0.1)';
+        confidenceBadge.style.borderColor = 'rgba(239,68,68,0.25)';
+        confidenceBadge.style.color = '#f87171';
+      } else {
+        lowConfidence.classList.add('hidden');
+        confidenceBadge.style.background = 'rgba(212,148,60,0.1)';
+        confidenceBadge.style.borderColor = 'rgba(212,148,60,0.25)';
+        confidenceBadge.style.color = '#D4943C';
+      }
+
+      // Log to Redis
+      fetch('/api/log-qa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: query, matched: match.question, score: best.score }),
+      }).catch(() => {});
+    } catch (err) {
+      console.error(err);
+    } finally {
+      loadingSpinner.classList.add('hidden');
+    }
+  }
+
+  // Debounced input handler
+  askInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => search(askInput.value), 600);
+  });
+
+  askInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      clearTimeout(debounceTimer);
+      search(askInput.value);
+    }
+  });
+
+  // Input focus effect
+  askInput.addEventListener('focus', () => {
+    searchWrapper.style.borderColor = 'rgba(212, 148, 60, 0.5)';
+    searchWrapper.style.background = 'rgba(212, 148, 60, 0.03)';
+  });
+  askInput.addEventListener('blur', () => {
+    searchWrapper.style.borderColor = '';
+    searchWrapper.style.background = '';
+  });
+
+  // Suggestion pills
+  document.querySelectorAll('.suggestion-pill').forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const q = (pill as HTMLElement).dataset.question!;
+      askInput.value = q;
+      search(q);
+    });
+  });
+
+  init();
+</script>

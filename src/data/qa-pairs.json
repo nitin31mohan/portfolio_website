@@ -1,0 +1,122 @@
+[
+  {
+    "question": "What is your current role?",
+    "answer": "I'm currently a Product Data Scientist at The Stepstone Group, where I work on semantic search, multilingual NLP, and large-scale personalization systems for EU job platforms. I've been there since June 2023."
+  },
+  {
+    "question": "Where do you work?",
+    "answer": "I work at The Stepstone Group, a leading European job board operator. I've been there since June 2023, working on search and recommendations infrastructure."
+  },
+  {
+    "question": "What are your main technical skills?",
+    "answer": "My core technical skills include PyTorch, transformer model fine-tuning (LoRA/QLoRA), AWS (SageMaker, ECS), vector stores, semantic retrieval, SentenceTransformers, and large-scale NLP pipeline design. I'm also strong on causal inference and evaluation methodology."
+  },
+  {
+    "question": "What is your experience with semantic search?",
+    "answer": "I built and productionized semantic search systems powering multiple EU job platforms at The Stepstone Group. I implemented INT8 quantization and embedding caching to achieve sub-100ms inference at millions of daily queries, maintaining nDCG@10 within 1% of full-precision baselines."
+  },
+  {
+    "question": "Tell me about your NLP experience",
+    "answer": "I have 5+ years of NLP experience, specializing in multilingual transformer fine-tuning (SentenceTransformers with LoRA/QLoRA), training data curation with hard-negative mining, and large-scale text processing pipelines. I've worked across English and German job-search corpora and processed news across five European languages for bias detection."
+  },
+  {
+    "question": "What is your education background?",
+    "answer": "I hold an MS in Artificial Intelligence from the University of Southampton (UK, 2021–2022) and a BTech in Computer Science Engineering from GGSIPU, India (2014–2018)."
+  },
+  {
+    "question": "What have you built at The Stepstone Group?",
+    "answer": "At Stepstone I built the semantic search system powering multiple EU job platforms, architected large-scale personalization and recommendation systems (B2C and B2B), and led evaluation governance for a multi-agent onboarding system. I also fine-tuned multilingual embedding models with LoRA/QLoRA and applied causal inference (regression discontinuity designs) to ranking experiments."
+  },
+  {
+    "question": "Tell me about your research experience",
+    "answer": "I was a Research Fellow at IDIAP Research Institute (Jun–Dec 2022) working on the EU-funded AI4Media project. I built a multilingual NLP pipeline processing 500k+ news articles across five European languages to detect framing bias and latent narrative structures, combining topic modeling, transformer-based summarization, and framing classification."
+  },
+  {
+    "question": "What is your experience with recommendation systems?",
+    "answer": "I architected large-scale personalization and recommendation systems (B2C/B2B) at The Stepstone Group, integrating behavioural signals and semantic embeddings to improve candidate-job and recruiter-candidate matching at scale."
+  },
+  {
+    "question": "How do you handle multilingual NLP?",
+    "answer": "I specialize in multilingual NLP — fine-tuning transformer models across English and German markets at Stepstone, and processing text in five European languages at IDIAP. My focus is on semantic drift control, multilingual sampling strategies, and cross-lingual retrieval quality through careful training data curation."
+  },
+  {
+    "question": "What is your experience with model optimization and inference?",
+    "answer": "I've implemented INT8 quantization and embedding caching to achieve sub-100ms inference at millions of daily queries, maintaining nDCG@10 within 1% of full-precision baselines. Model efficiency in production is a core part of how I work."
+  },
+  {
+    "question": "Tell me about your causal inference work",
+    "answer": "I applied causal inference techniques including regression discontinuity designs to evaluate ranking and agent policy changes under live traffic at Stepstone. This reduced false-positive regressions during rollouts by ~30% and supported launches that coincided with a ~2–4% uplift in application starts on affected traffic."
+  },
+  {
+    "question": "What are you looking for in a new role?",
+    "answer": "I'm looking for senior IC roles that combine deep NLP or ML research with real production impact — particularly around semantic search, recommendation systems, or applied AI where I can work at scale on meaningful problems. I value strong engineering culture and rigorous evaluation practices."
+  },
+  {
+    "question": "How can I contact you?",
+    "answer": "You can reach me at mohannitin321@gmail.com or by phone at +44 7436911217. You can also use the contact form on this site, or book a call directly."
+  },
+  {
+    "question": "What industries have you worked in?",
+    "answer": "I've worked in job search and HR tech (The Stepstone Group), academic and EU-funded research (IDIAP Research Institute on the AI4Media project), professional services consulting (EY), and software development (TO THE NEW)."
+  },
+  {
+    "question": "What is your experience with LLMs and multi-agent systems?",
+    "answer": "I led evaluation and governance design for a multi-agent onboarding system at Stepstone, spanning signup, job discovery, application guidance, and re-engagement. I implemented compliance-aligned robustness tests, agent consistency checks, behavioural drift monitoring, and outcome-level metrics — reducing post-release incidents by ~25%."
+  },
+  {
+    "question": "Tell me about your work at EY",
+    "answer": "At EY (Mar 2019 – Sep 2021), I built and evaluated predictive models on multi-million row datasets, with a focus on rigorous experiment design, robustness checks, and statistical validation across varied client domains. I also developed end-to-end modeling pipelines working with cross-functional teams."
+  },
+  {
+    "question": "What is your experience with vector databases?",
+    "answer": "I have hands-on production experience with vector stores and semantic retrieval systems, having built search infrastructure serving millions of daily queries with embedding caching and INT8 quantization for sub-100ms latency."
+  },
+  {
+    "question": "Are you open to relocation or remote work?",
+    "answer": "I'm based in the City of London. I'm open to fully remote roles globally and to hybrid or on-site positions in London and major European cities. I'm an international worker from India and require visa sponsorship: UK Skilled Worker (formerly Tier-2) sponsorship for UK roles, an EU Blue Card for European roles, and H-1B or equivalent visa authorisation for US-based roles. Feel free to get in touch to discuss specifics."
+  },
+  {
+    "question": "What makes you different from other data scientists?",
+    "answer": "I bridge research depth and production pragmatism. I bring the evaluation rigour of academic ML research, the engineering mindset needed to ship at scale, and causal inference skills that most data scientists don't have. I'm equally comfortable designing training pipelines, running statistically sound experiments, and reasoning about system-level production constraints."
+  },
+  {
+    "question": "What is LoRA and QLoRA and how have you used them?",
+    "answer": "LoRA (Low-Rank Adaptation) and QLoRA (Quantized LoRA) are parameter-efficient fine-tuning techniques for large transformer models. I've used them extensively at Stepstone to fine-tune SentenceTransformer embedding models on proprietary job-search corpora, aligning semantic retrieval and ranking behaviour across English and German markets without full model retraining."
+  },
+  {
+    "question": "How do you evaluate retrieval systems?",
+    "answer": "I use nDCG@k as a primary metric, alongside precision@k and recall@k depending on the use case. Beyond offline metrics, I design A/B experiments and apply causal inference techniques like regression discontinuity to validate improvements under live traffic. I also care deeply about evaluation data quality — deduplication, label consistency, and distribution coverage."
+  },
+  {
+    "question": "Tell me about your agentic feedback system",
+    "answer": "I built a LangGraph-powered agentic feedback system to tighten the experiment-to-fix loop at Stepstone. A lightweight product widget captured redacted UI state and request context, then a multi-step LangGraph workflow classified the issue type (UI bug, parsing, wrong results, latency, or account state), extracted a structured report, validated it against a schema, deduped against existing issues, and created high-signal Jira tickets. Every step was traced in LangSmith. It ran on AWS Lambda with S3 for artifacts, PII redaction, rate limiting, and idempotency keys."
+  },
+  {
+    "question": "What is your experience with LangGraph?",
+    "answer": "I built a production agentic workflow using LangGraph for an experiment feedback system. LangGraph works well for multi-step AI pipelines where you need explicit control over each stage: intake, classification, structured extraction, validation, dedup, and routing. I used it specifically because free-form chaining made it too easy to lose schema guarantees between steps. The key lesson: an agentic workflow only works when you treat it like a production system — clear contracts, schema enforcement, monitoring."
+  },
+  {
+    "question": "What is your experience with LangSmith?",
+    "answer": "I integrated LangSmith for end-to-end tracing of the LangGraph feedback workflow. Every created ticket had a linked LangSmith trace, meaning engineers could explain why the system classified an issue a certain way, and I could debug agent misbehaviour by inspecting intermediate outputs. The observability it provides is non-negotiable for production LLM pipelines."
+  },
+  {
+    "question": "How do you handle privacy and PII in ML systems?",
+    "answer": "Privacy is a first-class concern. In the agentic feedback system, I built PII redaction and field hashing at the client before any data left the browser — sensitive fields like user profile text or uploaded documents were never stored or processed. We used strict redaction rules, rate limiting to prevent spam, and idempotency keys to avoid duplicates. For search models, I work with anonymised training data and ensure evaluation sets don't contain identifiable information."
+  },
+  {
+    "question": "What is your experience building production LLM systems?",
+    "answer": "My main production LLM work is the agentic feedback system: a multi-step LangGraph workflow that processes user reports into structured Jira tickets. The critical insight was that constraining the LLM matters more than just using one — we used structured outputs, strict schemas, and controlled vocabularies, because free-form text turns a feedback system into a noise generator. Deployed on AWS Lambda with LangSmith tracing, PII redaction, and full schema validation."
+  },
+  {
+    "question": "Do you need visa sponsorship or work authorisation?",
+    "answer": "Yes. I'm an international worker from India, based in the UK since September 2021. I require UK Skilled Worker (formerly Tier-2) visa sponsorship for UK-based roles, an EU Blue Card for roles in European countries, and an H-1B or equivalent visa authorisation for US-based roles. I've been employed at The Stepstone Group since June 2023 on a sponsored visa."
+  },
+  {
+    "question": "How long have you been in the UK?",
+    "answer": "I've been in the UK since September 2021. I completed my MSc in Artificial Intelligence at the University of Southampton in September 2022, followed by a research fellowship at IDIAP (ending December 2022), and have been at The Stepstone Group since June 2023."
+  },
+  {
+    "question": "Tell me about your work on political bias detection at IDIAP",
+    "answer": "At IDIAP Research Institute, I built a multilingual NLP pipeline for the EU-funded AI4Media project that processed over 500,000 news articles across five European languages (English, French, German, Italian, and Spanish). The system combined transformer-based summarization, topic modeling, and framing classification to detect political bias and latent narrative structures in news coverage. The goal was to identify how different outlets frame the same events — not just what they say, but how they say it. This involved significant work on cross-lingual transfer, domain-specific fine-tuning, and evaluation methodology for framing bias detection at scale."
+  }
+]
