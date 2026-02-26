@@ -95,7 +95,7 @@ const {
         href="/ask"
         id="fab-ama"
         class="fab-pill fab-ama group relative flex items-center gap-3 h-12 px-3.5 rounded-full"
-        style="background: rgba(13,13,18,0.85); border: 1px solid rgba(34,197,94,0.35); backdrop-filter: blur(16px); transition: all 0.3s cubic-bezier(0.25,0.46,0.45,0.94); box-shadow: 0 0 14px rgba(34,197,94,0.12);"
+        style="background: rgba(13,13,18,0.85); border: 1px solid rgba(34,197,94,0.55); backdrop-filter: blur(16px); transition: all 0.3s cubic-bezier(0.25,0.46,0.45,0.94); box-shadow: 0 0 20px rgba(34,197,94,0.30);"
         aria-label="Ask me anything"
       >
         <svg class="w-5 h-5 text-ivory/70 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -134,16 +134,16 @@ const {
 
       // FAB hover expand — consistent width for all short labels
       const FAB_EXPANDED_WIDTH = '80px';
-      const amaBorder = () => 'rgba(34,197,94,0.25)';
-      const amaGlow = () => '0 0 12px rgba(34,197,94,0.08)';
+      const amaBorder = () => 'rgba(34,197,94,0.50)';
+      const amaGlow = () => '0 0 20px rgba(34,197,94,0.28)';
 
       document.querySelectorAll('.fab-pill').forEach((pill) => {
         const isAma = pill.classList.contains('fab-ama');
         pill.addEventListener('mouseenter', () => {
           const el = pill as HTMLElement;
-          el.style.borderColor = isAma ? 'rgba(34,197,94,0.5)' : 'rgba(212,148,60,0.4)';
+          el.style.borderColor = isAma ? 'rgba(34,197,94,0.8)' : 'rgba(212,148,60,0.4)';
           el.style.transform = 'translateY(-2px)';
-          if (isAma) el.style.boxShadow = '0 0 20px rgba(34,197,94,0.15)';
+          if (isAma) el.style.boxShadow = '0 0 32px rgba(34,197,94,0.50)';
           const label = el.querySelector('.fab-label') as HTMLElement;
           if (label) {
             label.style.maxWidth = FAB_EXPANDED_WIDTH;
@@ -198,9 +198,12 @@ const {
       if (amaPill) {
         function pulseAma() {
           const t = Date.now() * 0.001;
-          const intensity = 0.12 + 0.08 * Math.sin(t * 1.5);
-          const spread = 12 + 6 * Math.sin(t * 1.5);
-          amaPill.style.boxShadow = `0 0 ${spread}px rgba(34,197,94,${intensity})`;
+          const s = Math.sin(t * 1.4);
+          const intensity = 0.28 + 0.22 * s;
+          const spread = 18 + 12 * s;
+          const outerIntensity = 0.10 + 0.10 * s;
+          const outerSpread = 36 + 16 * s;
+          amaPill.style.boxShadow = `0 0 ${spread}px rgba(34,197,94,${intensity.toFixed(2)}), 0 0 ${outerSpread}px rgba(34,197,94,${outerIntensity.toFixed(2)})`;
           requestAnimationFrame(pulseAma);
         }
         pulseAma();
@@ -299,6 +302,52 @@ const {
   .btn-ghost:hover::before { transform: translateX(0); }
   .btn-ghost:hover { transform: scale(1.03) translateY(-1px); border-color: rgba(212,148,60,0.5); color: #d4943c; }
   .btn-ghost span { position: relative; z-index: 1; }
+
+  /* AMA green button — hero variant */
+  .btn-ama {
+    position: relative; overflow: hidden;
+    display: inline-flex; align-items: center; gap: 0.625rem;
+    padding: 0.75rem 1.75rem;
+    background: rgba(34,197,94,0.06);
+    color: rgba(34,197,94,0.92);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 600; font-size: 0.875rem; letter-spacing: 0.05em;
+    border-radius: 9999px;
+    border: 1px solid rgba(34,197,94,0.45);
+    cursor: pointer; transform: translateZ(0);
+    animation: ama-glow-pulse 2.2s ease-in-out infinite;
+  }
+  .btn-ama::before {
+    content: ''; position: absolute; inset: 0;
+    background: rgba(34,197,94,0.1); transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94); border-radius: inherit;
+  }
+  .btn-ama:hover::before { transform: translateX(0); }
+  .btn-ama:hover {
+    transform: scale(1.03) translateY(-1px);
+    border-color: rgba(34,197,94,0.75);
+    box-shadow: 0 0 36px rgba(34,197,94,0.45) !important;
+    animation: none;
+  }
+  .btn-ama span { position: relative; z-index: 1; }
+  .btn-ama .ama-dot {
+    position: relative; z-index: 1;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(34,197,94,0.9);
+    box-shadow: 0 0 6px rgba(34,197,94,0.8);
+    flex-shrink: 0;
+  }
+
+  @keyframes ama-glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 10px rgba(34,197,94,0.18), 0 0 20px rgba(34,197,94,0.08);
+      border-color: rgba(34,197,94,0.4);
+    }
+    50% {
+      box-shadow: 0 0 22px rgba(34,197,94,0.50), 0 0 40px rgba(34,197,94,0.20);
+      border-color: rgba(34,197,94,0.72);
+    }
+  }
 
   /* ═══ FORM INPUTS ═══ */
   .form-input {
@@ -420,7 +469,15 @@ const {
     border-color: rgba(13,13,18,0.1) !important;
   }
   html:not(.dark) .fab-pill.fab-ama {
-    border-color: rgba(34,197,94,0.25) !important;
+    border-color: rgba(34,197,94,0.45) !important;
+  }
+  html:not(.dark) .btn-ama {
+    background: rgba(34,197,94,0.05) !important;
+    color: rgba(22,163,74,0.95) !important;
+  }
+  html:not(.dark) .btn-ama .ama-dot {
+    background: rgba(22,163,74,0.9) !important;
+    box-shadow: 0 0 6px rgba(22,163,74,0.6) !important;
   }
 
   /* Ask page */
