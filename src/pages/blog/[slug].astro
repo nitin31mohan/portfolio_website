@@ -21,12 +21,39 @@ const { Content } = await entry.render();
 function formatDate(d: Date) {
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
+
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: entry.data.title,
+  description: entry.data.excerpt,
+  datePublished: entry.data.date.toISOString(),
+  dateModified: entry.data.date.toISOString(),
+  author: { '@type': 'Person', name: 'Nitin Mohan' },
+  ...(entry.data.coverImage ? { image: entry.data.coverImage } : {}),
+};
+
+const faqSchema = entry.data.faqs?.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: entry.data.faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      })),
+    }
+  : null;
 ---
 
 <Layout
   title={`${entry.data.title} — Nitin Mohan`}
   description={entry.data.excerpt}
 >
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
+    {faqSchema && <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />}
+  </Fragment>
   <article class="min-h-screen pt-32 pb-24 px-6">
     <div class="max-w-2xl mx-auto">
       <!-- Back link -->
@@ -222,5 +249,47 @@ function formatDate(d: Date) {
     border-radius: 1rem;
     margin: 2rem 0;
     display: block;
+  }
+
+  .prose-midnight table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.75rem 0;
+    font-size: 0.875rem;
+  }
+
+  .prose-midnight thead th {
+    font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #d4943c;
+    font-weight: 600;
+    padding: 0.625rem 1rem;
+    border-bottom: 1px solid rgba(212, 148, 60, 0.25);
+    text-align: left;
+  }
+
+  .prose-midnight td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(250, 248, 245, 0.05);
+    vertical-align: top;
+    color: rgba(250, 248, 245, 0.65);
+    line-height: 1.6;
+  }
+
+  .prose-midnight td:first-child {
+    font-family: "SF Mono", Menlo, Monaco, Consolas, monospace;
+    font-size: 0.8rem;
+    color: rgba(250, 248, 245, 0.5);
+    white-space: nowrap;
+  }
+
+  .prose-midnight tr:last-child td {
+    border-bottom: none;
+  }
+
+  .prose-midnight tbody tr:hover td {
+    background: rgba(212, 148, 60, 0.03);
   }
 </style>

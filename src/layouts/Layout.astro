@@ -29,6 +29,9 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
 
+    <!-- Injected page-level schema and meta -->
+    <slot name="head" />
+
     <!-- SF Pro system font — no external request needed; falls back to Helvetica Neue cross-platform -->
 
     <!-- Prevent dark-mode flash -->

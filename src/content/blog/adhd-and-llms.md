@@ -7,6 +7,16 @@ coverImage: "https://images.pexels.com/photos/14386896/pexels-photo-14386896.jpe
 coverImageAlt: "A person's silhouette illuminated only by the glow of a computer screen in a dark room — a fitting metaphor for the quiet, solitary relationship many ADHD users develop with AI tools."
 draft: false
 tags: ["adhd", "llm", "productivity", "neurodivergence", "ai-tools"]
+faqs:
+  - question: "Is relying on an LLM for ADHD just a crutch?"
+    answer: >-
+      Crutch implies something that prevents recovery — a misleading frame. Glasses don't weaken vision; they enable function. For the 89% of people with ADHD who have at least one executive function impairment (PMC, 2024), LLMs are more prosthetic than crutch. The risk isn't the tool itself — it's using it without awareness of the cognitive dependency it can quietly build.
+  - question: "Can LLMs replace ADHD therapy or medication?"
+    answer: >-
+      No. ChatGPT scored 0/5 on nonverbal cue responsiveness in a 2024 expert panel evaluation (PMC). The tools are useful for day-to-day task scaffolding, not clinical intervention. They work alongside treatment — not instead of it.
+  - question: "Do LLMs actually hurt thinking over time?"
+    answer: >-
+      They can. A 2025 study of 666 participants found that heavy AI use correlates with significantly lower critical thinking scores, particularly among younger users (MDPI). Used deliberately and selectively, LLMs help. Used passively as a default for all cognitive work, they may flatten the skills they're meant to support.
 ---
 
 About 366 million adults worldwide live with ADHD — roughly 6.76% of the global population, according to a 2024 meta-analysis of 117 studies covering more than 21 million participants ([PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC11536208/)). That number is rising as diagnosis rates improve and the stigma around seeking one recedes. And when large language models broke into mainstream use in late 2022, this population was among the first — and most enthusiastic — adopters.
@@ -79,9 +89,19 @@ No. ChatGPT scored 0/5 on nonverbal cue responsiveness in a 2024 expert panel ev
 
 They can. A 2025 study of 666 participants found that heavy AI use correlates with significantly lower critical thinking scores, particularly among younger users ([MDPI](https://www.mdpi.com/2075-4698/15/1/6)). Used deliberately and selectively, LLMs help. Used passively as a default for all cognitive work, they may flatten the skills they're meant to support.
 
+## Benefits vs. Risks at a Glance
+
+| Aspect | The benefit | The risk |
+|--------|-------------|----------|
+| Task initiation | Removes the activation energy barrier to starting | Habitual use may reduce self-directed initiation over time |
+| Working memory | Externalises sequential steps to a chat window | Cognitive offloading may gradually reduce native capacity |
+| Information synthesis | Top use case for 62.5% of ADHD LLM users (arXiv, 2025) | 80% of concerned ADHD users flag misinformation vulnerability |
+| Communication style | Responds without judgment; no impatience, ever | Requires structured, linear prompts — masks ADHD's nonlinear thinking |
+| Clinical utility | 4.8/5 engagement from ADHD experts (Delphi, PMC 2024) | 0/5 nonverbal cue responsiveness — cannot replace clinical care |
+
 ## So Should You Use LLMs if You Have ADHD?
 
-LLMs are genuinely useful for ADHD brains — not because they're magic, but because they address specific, documented failure modes in executive function. The productivity and inclusion gains are real, measurable, and backed by data from populations large enough to matter.
+LLMs are genuinely useful for ADHD brains — not because they're magic, but because they address specific, documented failure modes in executive function. Among the 300+ neurodivergent employees in EY's 2024 Copilot study, 88% reported measurable productivity gains and 85% said generative AI made their workplace more inclusive ([EY](https://www.ey.com/en_uk/newsroom/2024/12/study-highlights-benefits-of-copilot)).
 
 The risks are real too. Misinformation vulnerability, cognitive offloading, prompting friction, and the hard ceiling on what these systems can perceive all deserve honest attention. The fact that ADHD communities are already having this conversation, largely unprompted, is itself a reasonable signal.
 
