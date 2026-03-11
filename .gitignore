@@ -36,6 +36,7 @@ test-results/
 
 # Development screenshots
 .screenshots/
+screenshots/
 
 # Claude Code local config
 .claude/settings.local.json
@@ -44,3 +45,10 @@ test-results/
 *.log
 npm-debug.log*
 .claude/
+
+# Company-tailored CVs — never commit these; only the generic nitin-mohan-cv.pdf belongs here
+public/*CV*.pdf
+public/*cv*.pdf
+public/*Resume*.pdf
+public/*resume*.pdf
+!public/nitin-mohan-cv.pdf
