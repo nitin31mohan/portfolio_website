@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "prepare": "git config core.hooksPath .githooks || true",
     "prebuild": "node scripts/embed-qa.mjs",
     "build": "astro build",
     "preview": "astro preview",
