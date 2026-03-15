@@ -4,8 +4,8 @@ date: 2026-03-15
 excerpt: "How I built Blom — a full-stack system that takes a room of strangers, runs them through a feature engineering pipeline and constrained assignment algorithm, then hands the result to an LLM for review before a human operator signs off."
 draft: false
 tags: ["python", "react", "machine-learning", "llm", "fastapi", "d3", "portfolio"]
-coverImage: "https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-coverImageAlt: "A group of people collaborating around a table"
+coverImage: "https://images.pexels.com/photos/6955659/pexels-photo-6955659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+coverImageAlt: "A diverse group of young adults laughing together over a candlelit dinner party"
 faqs:
   - question: "What is Blom?"
     answer: >-
