@@ -3,7 +3,7 @@ title: "Building an AI-Assisted Group Matching Engine"
 date: 2026-03-15
 excerpt: "How I built Blom — a full-stack system that takes a room of strangers, runs them through a feature engineering pipeline and constrained assignment algorithm, then hands the result to an LLM for review before a human operator signs off."
 draft: false
-tags: ["python", "react", "machine-learning", "llm", "fastapi", "d3", "portfolio"]
+tags: ["python", "react", "machine-learning", "llm", "synthetic-data", "pii", "matching", "langgraph"]
 coverImage: "https://images.pexels.com/photos/6955659/pexels-photo-6955659.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
 coverImageAlt: "A diverse group of young adults laughing together over a candlelit dinner party"
 faqs:
@@ -19,6 +19,8 @@ faqs:
 ---
 
 Every social event planner faces the same problem: given a room of strangers, how do you divide them into groups that actually work?
+
+*This system was built for [Blom Social](https://blom.social) — a platform that runs structured social events in London.*
 
 Too random and you get a table where nobody talks. Too deliberate and you violate privacy by visibly sorting people. And if you're running fifty events a month, doing it by hand at all stops being feasible.
 
@@ -36,6 +38,40 @@ The system has four layers that each hand off to the next:
 4. **Operator UI** — a force-directed canvas lets the operator inspect fit scores, drag nodes, freeze approved groups, and handle late sign-ups before committing
 
 Each layer produces a typed Pydantic model that the next layer consumes. Nothing reaches the frontend that hasn't passed through anonymisation.
+
+<svg viewBox="0 0 660 635" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Blom pipeline diagram: quiz responses through feature engineering, user embeddings, constrained matching, LLM review, to groups dispatched — with post-event ratings feeding back into matching" style="width:100%;max-width:520px;margin:2.5rem auto;display:block;">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="rgba(240,236,228,0.35)"/>
+    </marker>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="1" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M10,0 L0,5 L10,10 z" fill="rgba(212,148,60,0.6)"/>
+    </marker>
+  </defs>
+  <rect x="120" y="20" width="340" height="52" rx="12" fill="rgba(107,114,128,0.12)" stroke="rgba(107,114,128,0.5)" stroke-width="1.5"/>
+  <text x="290" y="51" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="15" font-weight="600" fill="rgba(250,248,245,0.9)">Quiz responses</text>
+  <line x1="290" y1="72" x2="290" y2="108" stroke="rgba(240,236,228,0.3)" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="120" y="112" width="340" height="72" rx="12" fill="rgba(99,102,241,0.12)" stroke="rgba(129,140,248,0.5)" stroke-width="1.5"/>
+  <text x="290" y="145" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="15" font-weight="600" fill="rgba(250,248,245,0.9)">Feature engineering</text>
+  <text x="290" y="167" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="12" fill="rgba(250,248,245,0.4)">Encode, scale, derive Big Five proxies</text>
+  <line x1="290" y1="184" x2="290" y2="220" stroke="rgba(240,236,228,0.3)" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="120" y="224" width="340" height="52" rx="12" fill="rgba(99,102,241,0.12)" stroke="rgba(129,140,248,0.5)" stroke-width="1.5"/>
+  <text x="290" y="255" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="15" font-weight="600" fill="rgba(250,248,245,0.9)">User embeddings</text>
+  <line x1="290" y1="276" x2="290" y2="312" stroke="rgba(240,236,228,0.3)" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="120" y="316" width="340" height="72" rx="12" fill="rgba(16,185,129,0.1)" stroke="rgba(52,211,153,0.45)" stroke-width="1.5"/>
+  <text x="290" y="349" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="15" font-weight="600" fill="rgba(250,248,245,0.9)">Constrained matching</text>
+  <text x="290" y="371" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="12" fill="rgba(250,248,245,0.4)">Optimise within-group similarity</text>
+  <line x1="290" y1="388" x2="290" y2="424" stroke="rgba(240,236,228,0.3)" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="120" y="428" width="340" height="72" rx="12" fill="rgba(212,148,60,0.1)" stroke="rgba(212,148,60,0.45)" stroke-width="1.5"/>
+  <text x="290" y="461" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="15" font-weight="600" fill="rgba(250,248,245,0.9)">LLM review layer</text>
+  <text x="290" y="483" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="12" fill="rgba(250,248,245,0.4)">Explain groupings, flag issues</text>
+  <line x1="290" y1="500" x2="290" y2="536" stroke="rgba(240,236,228,0.3)" stroke-width="1.5" marker-end="url(#arr)"/>
+  <rect x="120" y="540" width="340" height="52" rx="12" fill="rgba(16,185,129,0.1)" stroke="rgba(52,211,153,0.45)" stroke-width="1.5"/>
+  <text x="290" y="571" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="15" font-weight="600" fill="rgba(250,248,245,0.9)">Groups dispatched</text>
+  <polyline points="460,566 510,566 510,352 460,352" fill="none" stroke="rgba(212,148,60,0.45)" stroke-width="1.5" stroke-dasharray="5,4" marker-end="url(#arr-amber)"/>
+  <text x="518" y="453" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="11" fill="rgba(212,148,60,0.65)" text-anchor="start">Post-event</text>
+  <text x="518" y="469" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif" font-size="11" fill="rgba(212,148,60,0.65)" text-anchor="start">ratings</text>
+</svg>
 
 ---
 
