@@ -20,7 +20,7 @@ faqs:
 
 Every social event planner faces the same problem: given a room of strangers, how do you divide them into groups that actually work?
 
-*This system was built for [Blom Social](https://blom.social) — a platform that runs structured social events in London.*
+*This system was built for [Blom Social](https://blom.social) — a platform that runs structured social events in London and Cape Town.*
 
 Too random and you get a table where nobody talks. Too deliberate and you violate privacy by visibly sorting people. And if you're running fifty events a month, doing it by hand at all stops being feasible.
 
