@@ -3,7 +3,6 @@ export interface Props {
   solidNav?: boolean;
 }
 const { solidNav = false } = Astro.props;
-const isResumePage = Astro.url.pathname === '/resume';
 ---
 
 <nav id="navbar" class="fixed top-6 left-1/2 z-40 -translate-x-1/2 w-[85vw]" aria-label="Main navigation">
@@ -41,15 +40,9 @@ const isResumePage = Astro.url.pathname === '/resume';
 
     <!-- CTA — right-anchored -->
     <div class="ml-auto flex items-center gap-2">
-      {isResumePage ? (
-        <a href="/nitin-mohan-cv.pdf" download class="btn-ama hidden md:inline-flex text-xs py-1.5 px-4">
-          <span>Download Resume</span>
-        </a>
-      ) : (
-        <a href="/resume" class="btn-ama hidden md:inline-flex text-xs py-1.5 px-4">
-          <span>View Resume</span>
-        </a>
-      )}
+      <a id="nav-resume-btn" href="/resume" class="btn-ama hidden md:inline-flex text-xs py-1.5 px-4">
+        <span id="nav-resume-label">View Resume</span>
+      </a>
       <a href="/#contact" class="btn-primary text-xs py-1.5 px-4">
         <span>Let's Talk</span>
       </a>
@@ -82,15 +75,9 @@ const isResumePage = Astro.url.pathname === '/resume';
     <a href="/ask" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Ask</a>
     <a href="/blog" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Blog</a>
     <div class="mt-2 pt-2 flex flex-col gap-2" style="border-top: 1px solid rgba(250,248,245,0.1);">
-      {isResumePage ? (
-        <a href="/nitin-mohan-cv.pdf" download class="btn-ama w-full justify-center text-xs py-2">
-          <span>Download Resume</span>
-        </a>
-      ) : (
-        <a href="/resume" class="btn-ama w-full justify-center text-xs py-2">
-          <span>View Resume</span>
-        </a>
-      )}
+      <a id="nav-resume-btn-mobile" href="/resume" class="btn-ama w-full justify-center text-xs py-2">
+        <span id="nav-resume-label-mobile">View Resume</span>
+      </a>
       <a href="/#contact" class="btn-primary w-full justify-center text-xs py-2">
         <span>Let's Talk</span>
       </a>
@@ -145,6 +132,19 @@ const isResumePage = Astro.url.pathname === '/resume';
     heroSentinel.style.cssText = 'position:absolute;top:80vh;left:0;width:1px;height:1px;pointer-events:none;';
     document.body.prepend(heroSentinel);
     heroObserver.observe(heroSentinel);
+  }
+
+  // Adapt resume button based on current page
+  const onResumePage = window.location.pathname === '/resume' || window.location.pathname === '/resume/';
+  if (onResumePage) {
+    const btn = document.getElementById('nav-resume-btn') as HTMLAnchorElement | null;
+    const btnMobile = document.getElementById('nav-resume-btn-mobile') as HTMLAnchorElement | null;
+    if (btn) { btn.href = '/nitin-mohan-cv.pdf'; btn.setAttribute('download', ''); }
+    if (btnMobile) { btnMobile.href = '/nitin-mohan-cv.pdf'; btnMobile.setAttribute('download', ''); }
+    const label = document.getElementById('nav-resume-label');
+    const labelMobile = document.getElementById('nav-resume-label-mobile');
+    if (label) label.textContent = 'Download Resume';
+    if (labelMobile) labelMobile.textContent = 'Download Resume';
   }
 
   // Mobile menu
