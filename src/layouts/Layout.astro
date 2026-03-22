@@ -6,12 +6,16 @@ export interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  solidNav?: boolean;
+  showDownload?: boolean;
 }
 
 const {
   title = 'Nitin Mohan — Data Scientist',
   description = 'Senior Data Scientist specialising in NLP, semantic search, and large-scale ML systems. Building precision intelligence at The Stepstone Group.',
   ogImage = '/og.png',
+  solidNav = false,
+  showDownload = false,
 } = Astro.props;
 ---
 
@@ -64,7 +68,7 @@ const {
       </svg>
     </div>
 
-    <Nav />
+    <Nav solidNav={solidNav} showDownload={showDownload} />
     <main>
       <slot />
     </main>

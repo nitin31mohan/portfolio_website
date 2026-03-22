@@ -5,37 +5,15 @@ import Layout from '../layouts/Layout.astro';
 <Layout
   title="Résumé — Nitin Mohan"
   description="CV of Nitin Mohan, Senior Data Scientist specialising in NLP and semantic search."
+  solidNav={true}
+  showDownload={true}
 >
-  <section class="flex flex-col" style="height: calc(100dvh - 72px); margin-top: 72px;">
-    <!-- Slim top bar with download affordance -->
-    <div
-      class="flex items-center justify-between px-6 py-3 shrink-0"
-      style="border-bottom: 1px solid var(--border-faint);"
-    >
-      <span class="font-mono text-xs" style="color: rgba(var(--c-text) / 0.35); letter-spacing: 0.08em;">
-        NITIN MOHAN — RÉSUMÉ
-      </span>
-      <a
-        href="/nitin-mohan-cv.pdf"
-        download
-        class="btn-ghost"
-        style="padding: 0.4rem 1rem; font-size: 0.75rem;"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="7 10 12 15 17 10"/>
-          <line x1="12" y1="15" x2="12" y2="3"/>
-        </svg>
-        <span>Download PDF</span>
-      </a>
-    </div>
-
-    <!-- PDF iframe -->
+  <div style="margin-top: 72px; height: calc(100dvh - 72px);">
     <iframe
       src="/nitin-mohan-cv.pdf"
-      class="w-full grow"
+      class="w-full h-full"
       title="Nitin Mohan — Résumé"
-      style="border: none;"
+      style="border: none; display: block;"
     />
-  </section>
+  </div>
 </Layout>

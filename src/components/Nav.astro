@@ -1,10 +1,15 @@
 ---
-// The Floating Island — pill-shaped navbar, morphs on scroll
+export interface Props {
+  solidNav?: boolean;
+  showDownload?: boolean;
+}
+const { solidNav = false, showDownload = false } = Astro.props;
 ---
 
 <nav id="navbar" class="fixed top-6 left-1/2 z-40 -translate-x-1/2 w-[85vw]" aria-label="Main navigation">
   <div
     id="nav-pill"
+    data-solid={solidNav ? 'true' : 'false'}
     class="relative flex items-center w-full px-5 py-2 rounded-full transition-all duration-500"
     style="background: transparent; border: 1px solid transparent;"
   >
@@ -35,9 +40,16 @@
     </div>
 
     <!-- CTA — right-anchored -->
-    <a href="/#contact" class="ml-auto btn-primary text-xs py-1.5 px-4">
-      <span>Let's Talk</span>
-    </a>
+    <div class="ml-auto flex items-center gap-2">
+      {showDownload && (
+        <a href="/nitin-mohan-cv.pdf" download class="btn-ama hidden md:inline-flex text-xs py-1.5 px-4">
+          <span>Download Resume</span>
+        </a>
+      )}
+      <a href="/#contact" class="btn-primary text-xs py-1.5 px-4">
+        <span>Let's Talk</span>
+      </a>
+    </div>
 
     <!-- Mobile menu toggle -->
     <button
@@ -65,7 +77,12 @@
     <a href="/#work" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Work</a>
     <a href="/ask" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Ask</a>
     <a href="/blog" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Blog</a>
-    <div class="mt-2 pt-2" style="border-top: 1px solid rgba(250,248,245,0.1);">
+    <div class="mt-2 pt-2 flex flex-col gap-2" style="border-top: 1px solid rgba(250,248,245,0.1);">
+      {showDownload && (
+        <a href="/nitin-mohan-cv.pdf" download class="btn-ama w-full justify-center text-xs py-2">
+          <span>Download Resume</span>
+        </a>
+      )}
       <a href="/#contact" class="btn-primary w-full justify-center text-xs py-2">
         <span>Let's Talk</span>
       </a>
@@ -82,7 +99,9 @@
   // Morph on scroll (theme-aware)
   function isDark() { return document.documentElement.classList.contains('dark'); }
 
-  let scrolledPast = false;
+  const isSolid = navPill?.dataset.solid === 'true';
+  let scrolledPast = isSolid; // solid pages start as scrolled
+
   function applyNavStyle() {
     if (!scrolledPast) {
       navPill!.style.background = 'transparent';
@@ -91,29 +110,34 @@
       navPill!.style.boxShadow = 'none';
     } else {
       const dark = isDark();
-      navPill!.style.background = dark ? 'rgba(13,13,18,0.75)' : 'rgba(250,250,248,0.85)';
+      navPill!.style.background = dark ? 'rgba(13,13,18,0.92)' : 'rgba(250,250,248,0.96)';
       navPill!.style.borderColor = dark ? 'rgba(250,248,245,0.08)' : 'rgba(13,13,18,0.08)';
-      navPill!.style.backdropFilter = 'blur(20px)';
+      navPill!.style.backdropFilter = isSolid ? 'none' : 'blur(20px)';
       navPill!.style.boxShadow = dark ? '0 8px 32px rgba(0,0,0,0.4)' : '0 8px 32px rgba(0,0,0,0.06)';
     }
   }
+
+  applyNavStyle(); // apply immediately (solid pages need this on load)
 
   // Listen for theme changes to refresh nav style
   const themeObs = new MutationObserver(() => applyNavStyle());
   themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
-  const heroObserver = new IntersectionObserver(
-    (entries) => {
-      scrolledPast = !entries[0].isIntersecting;
-      applyNavStyle();
-    },
-    { threshold: 0.1 }
-  );
+  // Only set up scroll observer on non-solid pages
+  if (!isSolid) {
+    const heroObserver = new IntersectionObserver(
+      (entries) => {
+        scrolledPast = !entries[0].isIntersecting;
+        applyNavStyle();
+      },
+      { threshold: 0.1 }
+    );
 
-  const heroSentinel = document.createElement('div');
-  heroSentinel.style.cssText = 'position:absolute;top:80vh;left:0;width:1px;height:1px;pointer-events:none;';
-  document.body.prepend(heroSentinel);
-  heroObserver.observe(heroSentinel);
+    const heroSentinel = document.createElement('div');
+    heroSentinel.style.cssText = 'position:absolute;top:80vh;left:0;width:1px;height:1px;pointer-events:none;';
+    document.body.prepend(heroSentinel);
+    heroObserver.observe(heroSentinel);
+  }
 
   // Mobile menu
   mobileToggle?.addEventListener('click', () => {
