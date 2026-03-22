@@ -10,6 +10,7 @@ import Layout from '../layouts/Layout.astro';
 >
   <div style="margin-top: 72px; height: calc(100dvh - 72px);">
     <iframe
+      id="resume-frame"
       src="/nitin-mohan-cv.pdf"
       class="w-full h-full"
       title="Nitin Mohan — Résumé"
@@ -17,3 +18,21 @@ import Layout from '../layouts/Layout.astro';
     />
   </div>
 </Layout>
+
+<script>
+  const frame = document.getElementById('resume-frame') as HTMLIFrameElement;
+
+  frame?.addEventListener('load', () => {
+    try {
+      const href = frame.contentWindow?.location?.href ?? '';
+      // If the iframe has navigated away from the PDF, take the top window there
+      if (href && !href.includes('.pdf') && href !== 'about:blank') {
+        window.location.href = href;
+      }
+    } catch (_) {
+      // Cross-origin security error — shouldn't happen on same-origin links
+      // but redirect home as a safe fallback
+      window.location.href = '/';
+    }
+  });
+</script>
