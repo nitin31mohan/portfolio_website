@@ -8,13 +8,12 @@ import Layout from '../layouts/Layout.astro';
   solidNav={true}
 >
   <div style="margin-top: 72px; height: calc(100dvh - 72px);">
-    <iframe
-      id="resume-frame"
+    <embed
       src="/nitin-mohan-cv.pdf"
+      type="application/pdf"
       class="w-full h-full"
       title="Nitin Mohan — Résumé"
-      style="border: none; display: block;"
-      sandbox="allow-same-origin allow-scripts allow-downloads allow-popups allow-forms allow-modals allow-top-navigation-by-user-activation"
+      style="display: block; border: none;"
     />
   </div>
 </Layout>
