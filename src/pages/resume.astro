@@ -6,7 +6,6 @@ import Layout from '../layouts/Layout.astro';
   title="Résumé — Nitin Mohan"
   description="CV of Nitin Mohan, Senior Data Scientist specialising in NLP and semantic search."
   solidNav={true}
-  showDownload={true}
 >
   <div style="margin-top: 72px; height: calc(100dvh - 72px);">
     <iframe
@@ -15,24 +14,7 @@ import Layout from '../layouts/Layout.astro';
       class="w-full h-full"
       title="Nitin Mohan — Résumé"
       style="border: none; display: block;"
+      sandbox="allow-same-origin allow-scripts allow-downloads allow-popups allow-forms allow-modals allow-top-navigation-by-user-activation"
     />
   </div>
 </Layout>
-
-<script>
-  const frame = document.getElementById('resume-frame') as HTMLIFrameElement;
-
-  frame?.addEventListener('load', () => {
-    try {
-      const href = frame.contentWindow?.location?.href ?? '';
-      // If the iframe has navigated away from the PDF, take the top window there
-      if (href && !href.includes('.pdf') && href !== 'about:blank') {
-        window.location.href = href;
-      }
-    } catch (_) {
-      // Cross-origin security error — shouldn't happen on same-origin links
-      // but redirect home as a safe fallback
-      window.location.href = '/';
-    }
-  });
-</script>

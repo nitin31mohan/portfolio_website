@@ -1,9 +1,9 @@
 ---
 export interface Props {
   solidNav?: boolean;
-  showDownload?: boolean;
 }
-const { solidNav = false, showDownload = false } = Astro.props;
+const { solidNav = false } = Astro.props;
+const isResumePage = Astro.url.pathname === '/resume';
 ---
 
 <nav id="navbar" class="fixed top-6 left-1/2 z-40 -translate-x-1/2 w-[85vw]" aria-label="Main navigation">
@@ -41,9 +41,13 @@ const { solidNav = false, showDownload = false } = Astro.props;
 
     <!-- CTA — right-anchored -->
     <div class="ml-auto flex items-center gap-2">
-      {showDownload && (
+      {isResumePage ? (
         <a href="/nitin-mohan-cv.pdf" download class="btn-ama hidden md:inline-flex text-xs py-1.5 px-4">
           <span>Download Resume</span>
+        </a>
+      ) : (
+        <a href="/resume" class="btn-ama hidden md:inline-flex text-xs py-1.5 px-4">
+          <span>View Resume</span>
         </a>
       )}
       <a href="/#contact" class="btn-primary text-xs py-1.5 px-4">
@@ -78,9 +82,13 @@ const { solidNav = false, showDownload = false } = Astro.props;
     <a href="/ask" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Ask</a>
     <a href="/blog" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Blog</a>
     <div class="mt-2 pt-2 flex flex-col gap-2" style="border-top: 1px solid rgba(250,248,245,0.1);">
-      {showDownload && (
+      {isResumePage ? (
         <a href="/nitin-mohan-cv.pdf" download class="btn-ama w-full justify-center text-xs py-2">
           <span>Download Resume</span>
+        </a>
+      ) : (
+        <a href="/resume" class="btn-ama w-full justify-center text-xs py-2">
+          <span>View Resume</span>
         </a>
       )}
       <a href="/#contact" class="btn-primary w-full justify-center text-xs py-2">
