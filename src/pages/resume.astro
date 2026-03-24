@@ -10,11 +10,30 @@ import Layout from '../layouts/Layout.astro';
 >
   <div style="margin-top: 72px; height: calc(100dvh - 72px);">
     <embed
+      id="pdf-embed"
       src="/nitin-mohan-cv.pdf"
       type="application/pdf"
       class="w-full h-full"
       title="Nitin Mohan — Résumé"
       style="display: block; border: none;"
     />
+    <iframe
+      id="pdf-frame"
+      class="w-full h-full"
+      style="display: none; border: none;"
+      title="Nitin Mohan — Résumé"
+    ></iframe>
   </div>
+  <script>
+    // Android browsers don't render <embed> PDFs inline — use Google Docs viewer instead
+    if (/Android/i.test(navigator.userAgent)) {
+      const embed = document.getElementById('pdf-embed') as HTMLElement | null;
+      const frame = document.getElementById('pdf-frame') as HTMLIFrameElement | null;
+      if (embed && frame) {
+        embed.style.display = 'none';
+        frame.src = 'https://docs.google.com/viewer?url=https%3A%2F%2Fnitinmohan.dev%2Fnitin-mohan-cv.pdf&embedded=true';
+        frame.style.display = 'block';
+      }
+    }
+  </script>
 </Layout>

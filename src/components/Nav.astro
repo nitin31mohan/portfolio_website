@@ -74,7 +74,7 @@ const { solidNav = false } = Astro.props;
     <a href="/#work" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Work</a>
     <a href="/ask" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Ask</a>
     <a href="/blog" class="px-4 py-2.5 rounded-2xl text-sm font-medium text-ivory/70 hover:text-ivory hover:bg-white/5">Blog</a>
-    <div class="mt-2 pt-2 flex flex-col gap-2" style="border-top: 1px solid rgba(250,248,245,0.1);">
+    <div id="mobile-menu-ctas" class="mt-2 pt-2 flex flex-col gap-2" style="border-top: 1px solid rgba(250,248,245,0.1);">
       <a id="nav-resume-btn-mobile" href="/resume" class="btn-ama w-full justify-center text-xs py-2">
         <span id="nav-resume-label-mobile">View Resume</span>
       </a>
@@ -138,13 +138,23 @@ const { solidNav = false } = Astro.props;
   const onResumePage = window.location.pathname === '/resume' || window.location.pathname === '/resume/';
   if (onResumePage) {
     const btn = document.getElementById('nav-resume-btn') as HTMLAnchorElement | null;
-    const btnMobile = document.getElementById('nav-resume-btn-mobile') as HTMLAnchorElement | null;
-    if (btn) { btn.href = '/nitin-mohan-cv.pdf'; btn.setAttribute('download', ''); }
-    if (btnMobile) { btnMobile.href = '/nitin-mohan-cv.pdf'; btnMobile.setAttribute('download', ''); }
+    if (btn) {
+      btn.href = '/nitin-mohan-cv.pdf';
+      btn.setAttribute('download', '');
+      // Show on all screen sizes — no burger on this page so there's room
+      btn.classList.remove('hidden', 'md:inline-flex');
+      btn.classList.add('inline-flex');
+    }
     const label = document.getElementById('nav-resume-label');
-    const labelMobile = document.getElementById('nav-resume-label-mobile');
     if (label) label.textContent = 'Download Resume';
-    if (labelMobile) labelMobile.textContent = 'Download Resume';
+
+    // Hide the burger toggle — nav links are irrelevant on the resume page
+    const toggle = document.getElementById('mobile-menu-toggle');
+    if (toggle) toggle.style.display = 'none';
+
+    // Hide CTAs from the mobile dropdown (they're already in the navbar)
+    const mobileCtas = document.getElementById('mobile-menu-ctas');
+    if (mobileCtas) mobileCtas.style.display = 'none';
   }
 
   // Mobile menu
