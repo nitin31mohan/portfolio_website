@@ -40,10 +40,10 @@ const { solidNav = false } = Astro.props;
 
     <!-- CTA — right-anchored -->
     <div class="ml-auto flex items-center gap-2">
-      <a id="nav-resume-btn" href="/resume" class="btn-ama hidden md:inline-flex text-xs py-1.5 px-4">
+      <a id="nav-resume-btn" href="/resume" class="btn-ama hidden md:inline-flex" style="padding: 6px 14px !important; white-space: nowrap; font-size: 0.75rem;">
         <span id="nav-resume-label">View Resume</span>
       </a>
-      <a href="/#contact" class="btn-primary text-xs py-1.5 px-4">
+      <a href="/#contact" class="btn-primary" style="padding: 6px 14px !important; white-space: nowrap; font-size: 0.75rem;">
         <span>Let's Talk</span>
       </a>
     </div>
@@ -147,10 +147,6 @@ const { solidNav = false } = Astro.props;
     }
     const label = document.getElementById('nav-resume-label');
     if (label) label.textContent = 'Download Resume';
-
-    // Hide the burger toggle — nav links are irrelevant on the resume page
-    const toggle = document.getElementById('mobile-menu-toggle');
-    if (toggle) toggle.style.display = 'none';
 
     // Hide CTAs from the mobile dropdown (they're already in the navbar)
     const mobileCtas = document.getElementById('mobile-menu-ctas');
