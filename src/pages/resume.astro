@@ -24,6 +24,18 @@ import Layout from '../layouts/Layout.astro';
       title="Nitin Mohan — Résumé"
     ></iframe>
   </div>
+  <!-- Mobile-only download FAB at bottom of screen -->
+  <div class="md:hidden" style="position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 50;">
+    <a
+      href="/nitin-mohan-cv.pdf"
+      download
+      class="btn-ama"
+      style="padding: 14px 36px !important; white-space: nowrap; font-size: 0.9rem; justify-content: center; min-width: 220px;"
+    >
+      <span>Download Resume</span>
+    </a>
+  </div>
+
   <script>
     // Android browsers don't render <embed> PDFs inline — use Google Docs viewer instead
     if (/Android/i.test(navigator.userAgent)) {

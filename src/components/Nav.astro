@@ -40,9 +40,11 @@ const { solidNav = false } = Astro.props;
 
     <!-- CTA — right-anchored -->
     <div class="ml-auto flex items-center gap-2">
-      <a id="nav-resume-btn" href="/resume" class="btn-ama hidden md:inline-flex" style="padding: 6px 14px !important; white-space: nowrap; font-size: 0.75rem;">
-        <span id="nav-resume-label">View Resume</span>
-      </a>
+      <div class="hidden md:block">
+        <a id="nav-resume-btn" href="/resume" class="btn-ama" style="padding: 6px 14px !important; white-space: nowrap; font-size: 0.75rem;">
+          <span id="nav-resume-label">View Resume</span>
+        </a>
+      </div>
       <a href="/#contact" class="btn-primary" style="padding: 6px 14px !important; white-space: nowrap; font-size: 0.75rem;">
         <span>Let's Talk</span>
       </a>
@@ -141,9 +143,7 @@ const { solidNav = false } = Astro.props;
     if (btn) {
       btn.href = '/nitin-mohan-cv.pdf';
       btn.setAttribute('download', '');
-      // Show on all screen sizes — no burger on this page so there's room
-      btn.classList.remove('hidden', 'md:inline-flex');
-      btn.classList.add('inline-flex');
+      // Keep hidden md:inline-flex — mobile gets a bottom FAB instead
     }
     const label = document.getElementById('nav-resume-label');
     if (label) label.textContent = 'Download Resume';
